@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ben Avery Clay Crushers — Developing Champions in Skeet, Trap & Sporting Clays</title>
+  <meta name="description" content="Youth shooting sports team in Phoenix, AZ competing in Skeet, Trap, and Sporting Clays. Ages 8-18. Join the Ben Avery Clay Crushers today.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">
+        <img src="assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="registration.html">Register</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="registration.html" class="navbar-cta">Join the Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <img src="assets/logo.png" alt="Clay Crushers Logo" class="hero-logo">
+        <h1>Ben Avery Clay Crushers</h1>
+        <p class="tagline">Developing Champions in Skeet, Trap &amp; Sporting Clays</p>
+        <a href="registration.html" class="btn btn-primary">Join the Team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disciplines Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Our Disciplines</h2>
+      <p class="section-subtitle">We train in three competitive shooting disciplines, each offering unique challenges and skills for athletes of all levels.</p>
+      <div class="disciplines-grid">
+        <div class="discipline-card animate-on-scroll">
+          <div class="discipline-icon">&#x1F3AF;</div>
+          <h3>Skeet</h3>
+          <p>Competitors shoot at two moving clay targets launched from high and low houses along eight shooting stations. Skeet requires quick reflexes, smooth gun handling, and the ability to track fast-crossing targets.</p>
+        </div>
+        <div class="discipline-card animate-on-scroll">
+          <div class="discipline-icon">&#x1F3AF;</div>
+          <h3>Trap</h3>
+          <p>Shooters stand behind a single line and fire at targets launched away from them from a concealed machine. Trap emphasizes proper mount, consistent swing, and the ability to read target trajectory downrange.</p>
+        </div>
+        <div class="discipline-card animate-on-scroll">
+          <div class="discipline-icon">&#x1F3AF;</div>
+          <h3>Sporting Clays</h3>
+          <p>Often called "golf with a shotgun," Sporting Clays features a variety of target trajectories along a course of stations. It develops adaptability and all-around shooting skills in realistic field conditions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Snapshot -->
+  <section class="section about-snapshot">
+    <div class="container">
+      <h2 class="section-title">About the Team</h2>
+      <p>The Ben Avery Clay Crushers is a youth shooting sports team based at the Ben Avery Shooting Range in Phoenix, Arizona. We serve athletes ages 8–18 who are passionate about skeet, trap, and sporting clays.</p>
+      <p>Our program is built on a foundation of safety, skill development, and sportsmanship. Whether your child is picking up a shotgun for the first time or has been competing for years, there's a place for them on our team.</p>
+      <p>We believe shooting sports teach focus, discipline, and confidence that extend far beyond the range. Our coaches are dedicated to nurturing both the shooters and the leaders our athletes are becoming.</p>
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="about.html" class="btn btn-primary">Learn More About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Ready to Compete?</h2>
+      <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">Register your athlete today and join a team that's invested in their success.</p>
+      <a href="registration.html" class="btn btn-primary">Register Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Clay Crushers Logo">
+          <p>Developing young shooters with a commitment to safety, sportsmanship, and excellence at the Ben Avery Shooting Range in Phoenix, AZ.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="registration.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:team.claycrushers@gmail.com">team.claycrushers@gmail.com</a></li>
+            <li>Ben Avery Shooting Range</li>
+            <li>Phoenix, Arizona</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> Ben Avery Clay Crushers. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Close mobile nav when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

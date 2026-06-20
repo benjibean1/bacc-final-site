@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration — Ben Avery Clay Crushers</title>
+  <meta name="description" content="Register for the 2025-2026 season. Complete the form below to join the Ben Avery Clay Crushers youth shooting sports team in Phoenix, AZ.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">
+        <img src="assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="registration.html" class="active">Register</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="registration.html" class="navbar-cta">Join the Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section style="background: var(--primary-blue); color: var(--white); padding: 4rem 0 3rem; text-align: center;">
+    <div class="container">
+      <h1 style="font-size: 2.75rem;">Registration</h1>
+      <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0.75rem auto 0;">2025–2026 Season Registration</p>
+    </div>
+  </section>
+
+  <!-- Registration Form -->
+  <section>
+    <div class="registration-container">
+      <div class="registration-header">
+        <h2 style="font-size: 1.75rem; color: var(--primary-blue);">Athlete Registration</h2>
+        <p>Complete all required fields to submit your registration. We'll review and contact you with next steps.</p>
+      </div>
+
+      <div class="form-message success" id="successMessage">
+        &#10004; Registration submitted successfully! We'll be in touch soon.
+      </div>
+      <div class="form-message error" id="errorMessage">
+        An error occurred. Please check the fields and try again.
+      </div>
+
+      <form id="registrationForm">
+
+        <!-- Athlete Info -->
+        <div class="form-section">
+          <h3>Athlete Information</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Athlete Type <span class="required">*</span></label>
+              <select name="athlete_type" required>
+                <option value="">Select...</option>
+                <option value="New">New Athlete</option>
+                <option value="Returning">Returning Athlete</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Gender <span class="required">*</span></label>
+              <select name="gender" required>
+                <option value="">Select...</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" name="first_name" required placeholder="John">
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" name="last_name" required placeholder="Doe">
+            </div>
+            <div class="form-group">
+              <label>Current Grade <span class="required">*</span></label>
+              <input type="text" name="current_grade" required placeholder="e.g., 5th, 8th, 11th, College">
+            </div>
+            <div class="form-group">
+              <label>Graduation Year <span class="required">*</span></label>
+              <input type="text" name="graduation_year" required placeholder="e.g., 2030">
+            </div>
+            <div class="form-group full-width">
+              <label>School Name <span class="required">*</span></label>
+              <input type="text" name="school_name" required placeholder="School name">
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="form-section">
+          <h3>Contact Information</h3>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label>Street Address <span class="required">*</span></label>
+              <input type="text" name="address" required placeholder="123 Main St">
+            </div>
+            <div class="form-group">
+              <label>City <span class="required">*</span></label>
+              <input type="text" name="city" required placeholder="Phoenix">
+            </div>
+            <div class="form-group">
+              <label>ZIP Code <span class="required">*</span></label>
+              <input type="text" name="zip" required placeholder="85001">
+            </div>
+            <div class="form-group">
+              <label>Cell Phone</label>
+              <input type="tel" name="cell_phone" placeholder="(555) 123-4567">
+            </div>
+          </div>
+        </div>
+
+        <!-- Guardian 1 -->
+        <div class="form-section">
+          <h3>Guardian 1 (Primary)</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" name="guardian1_first" required placeholder="Jane">
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" name="guardian1_last" required placeholder="Doe">
+            </div>
+            <div class="form-group">
+              <label>Email <span class="required">*</span></label>
+              <input type="email" name="guardian1_email" required placeholder="parent@example.com">
+            </div>
+            <div class="form-group">
+              <label>Cell Phone <span class="required">*</span></label>
+              <input type="tel" name="guardian1_cell" required placeholder="(555) 123-4567">
+            </div>
+          </div>
+        </div>
+
+        <!-- Guardian 2 (Optional) -->
+        <div class="form-section">
+          <h3>Guardian 2 (Optional)</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" name="guardian2_first" placeholder="John">
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" name="guardian2_last" placeholder="Smith">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="guardian2_email" placeholder="parent2@example.com">
+            </div>
+            <div class="form-group">
+              <label>Cell Phone</label>
+              <input type="tel" name="guardian2_cell" placeholder="(555) 987-6543">
+            </div>
+          </div>
+        </div>
+
+        <!-- Equipment -->
+        <div class="form-section">
+          <h3>Equipment & Preferences</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Shirt Size <span class="required">*</span></label>
+              <select name="shirt_size" required>
+                <option value="">Select...</option>
+                <option value="YS">Youth Small</option>
+                <option value="YM">Youth Medium</option>
+                <option value="YL">Youth Large</option>
+                <option value="YXL">Youth XL</option>
+                <option value="S">Adult Small</option>
+                <option value="M">Adult Medium</option>
+                <option value="L">Adult Large</option>
+                <option value="XL">Adult XL</option>
+                <option value="2XL">Adult 2XL</option>
+                <option value="3XL">Adult 3XL</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ammunition Gauge <span class="required">*</span></label>
+              <select name="ammunition" required>
+                <option value="">Select...</option>
+                <option value="12GA">12 Gauge</option>
+                <option value="20GA">20 Gauge</option>
+                <option value="Unknown">Not Sure</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Day & Pricing (NEW) -->
+        <div class="form-section">
+          <h3>Practice Day &amp; Pricing</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Practice Day <span class="required">*</span></label>
+              <select name="practice_day" id="practiceDay" required onchange="updatePricing()">
+                <option value="">Select...</option>
+                <option value="Sunday">Sunday Only</option>
+                <option value="Tuesday">Tuesday Only</option>
+                <option value="Both">Both Days (Sunday &amp; Tuesday)</option>
+              </select>
+            </div>
+            <div class="form-group" id="vestGroup">
+              <label>Replacement Vest</label>
+              <select name="replacement_vest" id="replacementVest">
+                <option value="No">No</option>
+                <option value="Yes">Yes (+$50.00)</option>
+              </select>
+              <small style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; display: block;">Available for returning athletes only</small>
+            </div>
+          </div>
+          <div class="practice-price-info" id="pricingInfo">
+            <strong>Practice Day Selection:</strong><br>
+            • Sunday or Tuesday Only: $550 (New) / $500 (Returning)<br>
+            • Both Days: $1,050 (New) / $1,000 (Returning)<br><br>
+            <strong>Note:</strong> All prices include base registration. Replacement vests (+$50) available for Returning athletes.
+          </div>
+          <div id="pricingSummary" style="margin-top: 1rem; padding: 1rem; background: #e8f5e9; border-radius: 6px; font-weight: 600; display: none;">
+            <div id="pricingSummaryText"></div>
+          </div>
+        </div>
+
+        <!-- Memberships (Optional) -->
+        <div class="form-section">
+          <h3>Membership Affiliations (Optional)</h3>
+          <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Enter your membership number if you are a member of any of these organizations. Leave blank if not applicable.</p>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>ATA Member #</label>
+              <input type="text" name="ata_member" placeholder="e.g., 123456">
+            </div>
+            <div class="form-group">
+              <label>NSSA Member #</label>
+              <input type="text" name="nssa_member" placeholder="e.g., ABC-1234">
+            </div>
+            <div class="form-group">
+              <label>NSCA Member #</label>
+              <input type="text" name="nsca_member" placeholder="e.g., 789012">
+            </div>
+            <div class="form-group">
+              <label>USA YESS Member #</label>
+              <input type="text" name="usa_yess_member" placeholder="e.g., YESS-4567">
+            </div>
+            <div class="form-group">
+              <label>ASTA Member #</label>
+              <input type="text" name="asta_member" placeholder="e.g., 345678">
+            </div>
+            <div class="form-group">
+              <label>ASSA Member #</label>
+              <input type="text" name="assa_member" placeholder="e.g., 901234">
+            </div>
+            <div class="form-group">
+              <label>USAS Member #</label>
+              <input type="text" name="usas_member" placeholder="e.g., 567890">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-section">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Submit Registration</button>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">By submitting, you agree to comply with team safety policies and practices.</p>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Clay Crushers Logo">
+          <p>Developing young shooters with a commitment to safety, sportsmanship, and excellence at the Ben Avery Shooting Range in Phoenix, AZ.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="registration.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:team.claycrushers@gmail.com">team.claycrushers@gmail.com</a></li>
+            <li>Ben Avery Shooting Range</li>
+            <li>Phoenix, Arizona</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> Ben Avery Clay Crushers. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_URL = 'http://127.0.0.1:9120';
+
+    // Mobile nav toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Update pricing display in real-time
+    function updatePricing() {
+      const athleteType = document.querySelector('select[name="athlete_type"]').value;
+      const practiceDay = document.getElementById('practiceDay').value;
+      const replacementVest = document.getElementById('replacementVest').value;
+      const summary = document.getElementById('pricingSummary');
+      const summaryText = document.getElementById('pricingSummaryText');
+
+      if (!athleteType || !practiceDay) {
+        summary.style.display = 'none';
+        return;
+      }
+
+      let baseFee;
+      if (practiceDay === 'Both') {
+        baseFee = athleteType === 'New' ? 1050 : 1000;
+      } else {
+        baseFee = athleteType === 'New' ? 550 : 500;
+      }
+
+      let vestFee = 0;
+      if (athleteType === 'Returning' && replacementVest === 'Yes') {
+        vestFee = 50;
+      }
+
+      const total = baseFee + vestFee;
+
+      summaryText.innerHTML = 
+        'Practice: ' + practiceDay + '<br>' +
+        'Base Registration: $' + baseFee.toFixed(2) + (vestFee > 0 ? '<br>Replacement Vest: +$' + vestFee.toFixed(2) : '') + '<br>' +
+        '<strong>Total: $' + total.toFixed(2) + '</strong>';
+
+      summary.style.display = '';
+    }
+
+    document.getElementById('replacementVest').addEventListener('change', updatePricing);
+
+    // Form submission
+    const form = document.getElementById('registrationForm');
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      successMsg.className = 'form-message';
+      errorMsg.className = 'form-message';
+
+      // Collect form data
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        // Memberships: only include if there's a value (member number entered)
+        if (key.endsWith('_member')) {
+          if (value.trim() !== '') {
+            data[key] = value.trim();
+          }
+        } else {
+          data[key] = value;
+        }
+      });
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const response = await fetch(API_URL + '/api/athletes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          successMsg.className = 'form-message success';
+          successMsg.textContent = 'Registration submitted successfully! We\'ll be in touch soon.';
+          form.reset();
+          vestGroup.style.display = 'none';
+          document.getElementById('pricingSummary').style.display = 'none';
+          document.getElementById('pricingSummaryText').innerHTML = '';
+        } else {
+          errorMsg.className = 'form-message error';
+          errorMsg.textContent = result.error || 'Registration failed. Please check the form and try again.';
+        }
+      } catch (err) {
+        errorMsg.className = 'form-message error';
+        errorMsg.textContent = 'Could not connect to the server. Please try again later or contact us directly.';
+        console.error(err);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Registration';
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Ben Avery Clay Crushers</title>
+  <meta name="description" content="Get in touch with the Ben Avery Clay Crushers. Email us or visit us at the Ben Avery Shooting Range in Phoenix, AZ.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">
+        <img src="assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="registration.html">Register</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="registration.html" class="navbar-cta">Join the Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section style="background: var(--primary-blue); color: var(--white); padding: 4rem 0 3rem; text-align: center;">
+    <div class="container">
+      <h1 style="font-size: 2.75rem;">Contact Us</h1>
+      <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0.75rem auto 0;">We'd love to hear from you</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-info">
+          <h3>Get in Touch</h3>
+          <p style="color: var(--text-muted); margin-bottom: 2rem;">Have questions about registration, practice schedules, or anything else? Reach out and we'll get back to you as soon as possible.</p>
+
+          <div class="contact-info-item">
+            <div class="contact-icon">&#9993;</div>
+            <div>
+              <h4>Email</h4>
+              <p><a href="mailto:team.claycrushers@gmail.com">team.claycrushers@gmail.com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon">&#128205;</div>
+            <div>
+              <h4>Location</h4>
+              <p>Ben Avery Shooting Range<br>Phoenix, Arizona</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon">&#128338;</div>
+            <div>
+              <h4>Practice Days</h4>
+              <p>Sunday &amp; Tuesday<br><em style="font-size: 0.85rem; color: var(--text-muted);">Specific times coming soon</em></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-container">
+          <h3 style="color: var(--primary-blue); margin-bottom: 1.5rem; font-size: 1.25rem;">Send Us a Message</h3>
+          <form id="contactForm" action="mailto:team.claycrushers@gmail.com" method="post" enctype="text/plain">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" name="name" required placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label>Your Email</label>
+              <input type="email" name="email" required placeholder="you@example.com">
+            </div>
+            <div class="form-group">
+              <label>Subject</label>
+              <select name="subject">
+                <option value="General Inquiry">General Inquiry</option>
+                <option value="Registration">Registration Question</option>
+                <option value="Schedule">Schedule / Practice Info</option>
+                <option value="Competition">Competition Info</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea name="message" required placeholder="How can we help?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            <p style="color: var(--text-muted); font-size: 0.8rem; text-align: center; margin-top: 0.75rem;">This will open your default email client with the message pre-filled.</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Placeholder -->
+  <section style="background: var(--bg-light); padding: 3rem 0;">
+    <div class="container" style="text-align: center;">
+      <h2 style="font-size: 1.5rem; color: var(--primary-blue); margin-bottom: 1rem;">Find Us</h2>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Ben Avery Shooting Range — Phoenix, Arizona</p>
+      <!-- TODO: EMBED GOOGLE MAPS IFRAME HERE when ready -->
+      <div style="background: var(--white); border-radius: var(--radius); padding: 3rem; border: 2px dashed var(--border-color); max-width: 600px; margin: 0 auto;">
+        <p style="color: var(--text-muted);">Map embed coming soon</p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem;">We'll add an interactive map showing the range location.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Clay Crushers Logo">
+          <p>Developing young shooters with a commitment to safety, sportsmanship, and excellence at the Ben Avery Shooting Range in Phoenix, AZ.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="registration.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:team.claycrushers@gmail.com">team.claycrushers@gmail.com</a></li>
+            <li>Ben Avery Shooting Range</li>
+            <li>Phoenix, Arizona</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> Ben Avery Clay Crushers. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
