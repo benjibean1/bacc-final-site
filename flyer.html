@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clay Crushers Flyer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0a1f3f;
+      --blue: #1a3a6b;
+      --red: #c62828;
+      --red-dark: #8e0000;
+      --white: #ffffff;
+      --cream: #f5f1eb;
+      --gray-light: #d4d0ca;
+      --gray: #6b6560;
+    }
+
+    @page {
+      size: 8.5in 11in;
+      margin: 0;
+    }
+
+    body {
+      width: 8.5in;
+      height: 11in;
+      margin: 0 auto;
+      background: var(--cream);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    .flyer {
+      width: 8.5in;
+      height: 11in;
+      position: relative;
+      background: var(--navy);
+      overflow: hidden;
+    }
+
+    /* Full-width hero image at top */
+    .hero-image {
+      width: 100%;
+      height: 3.8in;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .hero-image .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(10, 31, 63, 0.3) 0%,
+        rgba(10, 31, 63, 0.5) 50%,
+        rgba(10, 31, 63, 0.95) 100%
+      );
+    }
+
+    /* Team name over the image */
+    .hero-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.6in 0.5in 0.35in;
+      text-align: center;
+    }
+
+    .hero-text .team-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 52pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      text-shadow: 0 3px 12px rgba(0,0,0,0.5);
+      line-height: 1.05;
+    }
+
+    .hero-text .team-name .red {
+      color: var(--red);
+    }
+
+    .hero-text .tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: 14pt;
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 0.2in;
+    }
+
+    /* Main content area */
+    .content {
+      padding: 0.35in 0.55in 0;
+      color: var(--white);
+    }
+
+    /* Season banner */
+    .season-banner {
+      background: var(--red);
+      color: var(--white);
+      text-align: center;
+      padding: 0.22in 0;
+      font-family: 'Oswald', sans-serif;
+      font-size: 22pt;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.35in;
+    }
+
+    .season-banner span {
+      font-weight: 400;
+      font-size: 13pt;
+      letter-spacing: 0.05em;
+      opacity: 0.85;
+      margin: 0 0.15in;
+    }
+
+    /* Disciplines grid */
+    .disciplines {
+      display: flex;
+      gap: 0.25in;
+      margin-bottom: 0.4in;
+    }
+
+    .discipline {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.28in 0.2in;
+      text-align: center;
+    }
+
+    .discipline .icon {
+      font-size: 22pt;
+      margin-bottom: 0.08in;
+    }
+
+    .discipline h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.06in;
+      color: var(--white);
+    }
+
+    .discipline p {
+      font-size: 9.5pt;
+      font-weight: 300;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Info strip */
+    .info-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.25in 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 0.3in;
+    }
+
+    .info-item {
+      text-align: center;
+    }
+
+    .info-item .label {
+      font-size: 8pt;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      margin-bottom: 0.04in;
+    }
+
+    .info-item .value {
+      font-family: 'Oswald', sans-serif;
+      font-size: 14pt;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    /* Call to action */
+    .cta-area {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.35in;
+    }
+
+    .cta-logo {
+      flex-shrink: 0;
+    }
+
+    .cta-logo img {
+      width: 1.2in;
+      height: 1.2in;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      padding: 3px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .cta-text {
+      flex: 1;
+    }
+
+    .cta-text h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      margin-bottom: 0.1in;
+      line-height: 1.2;
+    }
+
+    .cta-text p {
+      font-size: 11pt;
+      font-weight: 300;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 0.15in;
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 0.3in;
+      margin-top: 0.15in;
+    }
+
+    .contact-item {
+      font-size: 10pt;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    .contact-item strong {
+      color: var(--red);
+      font-weight: 600;
+      margin-right: 0.08in;
+    }
+
+    /* Location at bottom */
+    .location-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.25);
+      text-align: center;
+      padding: 0.18in 0.5in;
+    }
+
+    .location-bar p {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12pt;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Accent line */
+    .accent-line {
+      width: 2.5in;
+      height: 3px;
+      background: var(--red);
+      margin: 0 auto 0.3in;
+      border-radius: 2px;
+    }
+
+    @media print {
+      body {
+        background: none;
+      }
+      .flyer {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="flyer">
+    <!-- Hero Image Section -->
+    <div class="hero-image">
+      <img src="assets/Hero.png" alt="Team photo">
+      <div class="overlay"></div>
+      <div class="hero-text">
+        <div class="team-name">
+          <span class="red">CLAY</span> CRUSHERS
+        </div>
+        <div class="tagline">Developing Champions in Skeet, Trap & Sporting Clays</div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Season Banner -->
+      <div class="season-banner">
+        September – April <span>|</span> Collegiate
+      </div>
+
+      <!-- Disciplines -->
+      <div class="disciplines">
+        <div class="discipline">
+          <div class="icon">&#x1F3AF;</div>
+          <h3>Skeet</h3>
+          <p>Two moving targets, eight stations. Built on speed and precision.</p>
+        </div>
+        <div class="discipline">
+          <div class="icon">&#x1F3AF;</div>
+          <h3>Trap</h3>
+          <p>Targets launched away. Focus on form and reading trajectory.</p>
+        </div>
+        <div class="discipline">
+          <div class="icon">&#x1F3AF;</div>
+          <h3>Sporting</h3>
+          <p>Variable targets across the course. Develop all-around skill.</p>
+        </div>
+      </div>
+
+      <!-- Info Strip -->
+      <div class="info-strip">
+        <div class="info-item">
+          <div class="label">Location</div>
+          <div class="value">Ben Avery Range</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Season</div>
+          <div class="value">Sep – Apr</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Eligibility</div>
+          <div class="value">Collegiate</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-area">
+        <div class="cta-logo">
+          <img src="assets/logo.png" alt="Clay Crushers Logo">
+        </div>
+        <div class="cta-text">
+          <h2>Ready to Join the Team?</h2>
+          <p>Whether your athlete is picking up a shotgun for the first time or has years of experience, there's a place for them on the Clay Crushers.</p>
+          <div class="contact-row">
+            <div class="contact-item"><strong>WEB</strong> benaveryclaycrushers.org</div>
+            <div class="contact-item"><strong>EMAIL</strong> info@benaveryclaycrushers.org</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location Bar -->
+    <div class="location-bar">
+      <p>Phoenix, Arizona</p>
+    </div>
+  </div>
+</body>
+</html>
