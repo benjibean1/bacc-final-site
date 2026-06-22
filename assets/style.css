@@ -219,7 +219,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== Hero Section ===== */
 .hero {
   background: linear-gradient(135deg, rgba(26, 58, 107, 0.92), rgba(26, 58, 107, 0.85)),
-              url('https://images.unsplash.com/photo-1591117207239-786cc8d3a491?w=1400&q=80') center/cover no-repeat;
+              url('assets/Herobanner.png') center/cover no-repeat;
   min-height: 85vh;
   display: flex;
   align-items: center;
