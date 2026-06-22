@@ -47,22 +47,247 @@
         <p>Complete all required fields to submit your registration. We'll review and contact you with next steps.</p>
       </div>
 
-      <!-- Embedded Google Form -->
-      <div class="google-form-container">
-        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Complete the registration form below. All required fields are marked with an asterisk (*). Responses are automatically collected in our spreadsheet.</p>
-        <iframe
-          src="https://docs.google.com/forms/d/18z-_0mFMjrsKjDCSOlQHltif0GQ82cQFtlLNQk7Dxe8/viewform?embedded=true"
-          width="100%"
-          height="4500"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-          title="BACC Athlete Registration Form"
-          style="border: 2px solid var(--primary-blue); border-radius: 8px; overflow: hidden;"
-        >
-          Loading...
-        </iframe>
-      </div>
+      <div id="form-message" class="form-message"></div>
+
+      <form id="registration-form">
+
+        <!-- Athlete Info -->
+        <div class="form-section">
+          <h3>Athlete Information</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>New or Returning Athlete? <span class="required">*</span></label>
+              <select name="athlete_type" required>
+                <option value="">Select...</option>
+                <option value="New">New</option>
+                <option value="Returning">Returning</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Gender <span class="required">*</span></label>
+              <select name="gender" required>
+                <option value="">Select...</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" name="first_name" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" name="last_name" required>
+            </div>
+            <div class="form-group full-width">
+              <label>Address <span class="required">*</span></label>
+              <input type="text" name="address" required>
+            </div>
+            <div class="form-group">
+              <label>City <span class="required">*</span></label>
+              <input type="text" name="city" required>
+            </div>
+            <div class="form-group">
+              <label>ZIP Code <span class="required">*</span></label>
+              <input type="text" name="zip" required pattern="[0-9]{5}" placeholder="12345">
+            </div>
+            <div class="form-group">
+              <label>Cell Phone</label>
+              <input type="tel" name="cell_phone" placeholder="(555) 555-5555">
+            </div>
+            <div class="form-group">
+              <label>Current Grade <span class="required">*</span></label>
+              <select name="current_grade" required>
+                <option value="">Select...</option>
+                <option value="K">Kindergarten</option>
+                <option value="1">1st Grade</option>
+                <option value="2">2nd Grade</option>
+                <option value="3">3rd Grade</option>
+                <option value="4">4th Grade</option>
+                <option value="5">5th Grade</option>
+                <option value="6">6th Grade</option>
+                <option value="7">7th Grade</option>
+                <option value="8">8th Grade</option>
+                <option value="9">9th Grade</option>
+                <option value="10">10th Grade</option>
+                <option value="11">11th Grade</option>
+                <option value="12">12th Grade</option>
+                <option value="College">College</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>School Name <span class="required">*</span></label>
+              <input type="text" name="school_name" required>
+            </div>
+            <div class="form-group">
+              <label>Graduation Year <span class="required">*</span></label>
+              <input type="text" name="graduation_year" placeholder="e.g., 2028" required>
+            </div>
+            <div class="form-group">
+              <label>Shirt Size <span class="required">*</span></label>
+              <select name="shirt_size" required>
+                <option value="">Select...</option>
+                <option value="YS">Youth Small</option>
+                <option value="YM">Youth Medium</option>
+                <option value="YL">Youth Large</option>
+                <option value="YXL">Youth XL</option>
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">XL</option>
+                <option value="2XL">2XL</option>
+                <option value="3XL">3XL</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ammunition Gauge <span class="required">*</span></label>
+              <select name="ammunition" required>
+                <option value="">Select...</option>
+                <option value="12GA">12 Gauge</option>
+                <option value="20GA">20 Gauge</option>
+                <option value="Unknown">Not Sure Yet</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label>Practice Day <span class="required">*</span></label>
+              <select name="practice_day" required>
+                <option value="">Select...</option>
+                <option value="Sunday">Sunday Only ($550 New / $500 Returning)</option>
+                <option value="Tuesday">Tuesday Only ($550 New / $500 Returning)</option>
+                <option value="Both">Both Days ($1,050 New / $1,000 Returning)</option>
+              </select>
+            </div>
+            <div class="form-group full-width" id="replacement-vest-group" style="display: none;">
+              <label>Replacement Vest ($50) <span class="required">*</span></label>
+              <select name="replacement_vest">
+                <option value="">Select...</option>
+                <option value="Yes">Yes, I need a replacement vest</option>
+                <option value="No">No, I have my own vest</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guardian Information -->
+        <div class="form-section">
+          <h3>Guardian Information</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Guardian 1 First Name <span class="required">*</span></label>
+              <input type="text" name="guardian1_first" required>
+            </div>
+            <div class="form-group">
+              <label>Guardian 1 Last Name <span class="required">*</span></label>
+              <input type="text" name="guardian1_last" required>
+            </div>
+            <div class="form-group">
+              <label>Guardian 1 Email <span class="required">*</span></label>
+              <input type="email" name="guardian1_email" required>
+            </div>
+            <div class="form-group">
+              <label>Guardian 1 Cell Phone <span class="required">*</span></label>
+              <input type="tel" name="guardian1_cell" required>
+            </div>
+            <div class="form-group">
+              <label>Guardian 2 First Name</label>
+              <input type="text" name="guardian2_first">
+            </div>
+            <div class="form-group">
+              <label>Guardian 2 Last Name</label>
+              <input type="text" name="guardian2_last">
+            </div>
+            <div class="form-group">
+              <label>Guardian 2 Email</label>
+              <input type="email" name="guardian2_email">
+            </div>
+            <div class="form-group">
+              <label>Guardian 2 Cell Phone</label>
+              <input type="tel" name="guardian2_cell">
+            </div>
+          </div>
+        </div>
+
+        <!-- Membership Information -->
+        <div class="form-section">
+          <h3>Membership (Optional)</h3>
+          <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Are you a member of any of these organizations? (Helps us track team affiliations)</p>
+          <div class="form-group full-width">
+            <label style="margin-bottom: 0.5rem;">Select all that apply:</label>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>ATA Member</label>
+              <select name="ata_member">
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>NSSA Member</label>
+              <select name="nssa_member">
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>NSCA Member</label>
+              <select name="nsca_member">
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>USA YESS Member</label>
+              <select name="usa_yess_member">
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>ASTA Member</label>
+              <select name="asta_member">
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>ASSA Member</label>
+              <select name="assa_member">
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>USAS Member</label>
+              <select name="usas_member">
+                <option value="">Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-section">
+          <button type="submit" class="btn btn-primary" id="submit-btn">Submit Registration</button>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">You will receive a confirmation email once your registration is processed.</p>
+        </div>
+
+      </form>
     </div>
   </section>
 
@@ -100,7 +325,8 @@
   </footer>
 
   <script>
-    const API_URL = 'http://127.0.0.1:9120';
+    // API Configuration - this will be updated when the tunnel is live
+    const API_URL = 'https://api.benaveryclaycrushers.org';
 
     // Mobile nav toggle
     const hamburger = document.getElementById('hamburger');
@@ -108,6 +334,102 @@
     hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
     navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Show/hide replacement vest based on athlete type
+    document.querySelector('select[name="athlete_type"]').addEventListener('change', function() {
+      const vestGroup = document.getElementById('replacement-vest-group');
+      if (this.value === 'Returning') {
+        vestGroup.style.display = 'block';
+        vestGroup.querySelector('select').required = true;
+      } else {
+        vestGroup.style.display = 'none';
+        vestGroup.querySelector('select').required = false;
+        vestGroup.querySelector('select').value = '';
+      }
+    });
+
+    // Form submission
+    const form = document.getElementById('registration-form');
+    const formMessage = document.getElementById('form-message');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Validate required fields are filled
+      const requiredFields = form.querySelectorAll('[required]');
+      let hasEmpty = false;
+      for (const field of requiredFields) {
+        if (!field.value.trim()) {
+          field.style.borderColor = 'var(--accent-orange)';
+          hasEmpty = true;
+        } else {
+          field.style.borderColor = '';
+        }
+      }
+
+      if (hasEmpty) {
+        showFormMessage('Please fill in all required fields marked with an asterisk.', 'error');
+        return;
+      }
+
+      // Build the data object
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        if (value.trim()) {
+          data[key] = value.trim();
+        }
+      });
+
+      // Set disabled state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const response = await fetch(`${API_URL}/api/athletes`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.athlete_id) {
+          showFormMessage(`
+            <strong>Registration Successful!</strong><br>
+            Athlete ID: ${result.athlete_id}<br>
+            Division: ${result.division}<br>
+            ${result.pricing && result.pricing.practice_day_info ? 'Pricing: ' + result.pricing.practice_day_info : ''}
+          `, 'success');
+          form.reset();
+          document.getElementById('replacement-vest-group').style.display = 'none';
+        } else {
+          showFormMessage(result.error || 'Registration failed. Please try again.', 'error');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        showFormMessage('Network error. Please check your connection and try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Registration';
+      }
+    });
+
+    function showFormMessage(message, type) {
+      formMessage.innerHTML = message;
+      formMessage.className = `form-message ${type}`;
+      // Scroll to message
+      formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Auto-hide success messages after 10 seconds
+      if (type === 'success') {
+        setTimeout(() => {
+          formMessage.style.display = 'none';
+        }, 10000);
+      }
+    }
   </script>
 
 </body>
