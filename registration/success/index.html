@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Complete — Ben Avery Clay Crushers</title>
+  <meta name="description" content="Your BACC registration payment has been processed.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Payment Complete — Ben Avery Clay Crushers">
+  <meta property="og:description" content="Thank you for registering with the Ben Avery Clay Crushers.">
+  <meta property="og:image" content="https://benaveryclaycrushers.org/assets/Herobanner2.png">
+  <meta property="og:url" content="https://benaveryclaycrushers.org/registration/success">
+  <meta property="og:site_name" content="Ben Avery Clay Crushers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Payment Complete — Ben Avery Clay Crushers">
+  <meta name="twitter:description" content="Thank you for registering with the Ben Avery Clay Crushers.">
+  <meta name="twitter:image" content="https://benaveryclaycrushers.org/assets/Herobanner2.png">
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .success-page {
+      padding: 4rem 0;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+    }
+    .success-card {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-md);
+      border-top: 4px solid #28a745;
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.5rem;
+      background: #d4edda;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .success-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+    .success-card h1 {
+      color: var(--primary-blue);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .success-card .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+    .success-steps {
+      text-align: left;
+      background: var(--bg-light);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--accent-orange);
+    }
+    .success-steps li {
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+    }
+    .success-steps li:last-child {
+      margin-bottom: 0;
+    }
+    .success-steps strong {
+      color: var(--primary-blue);
+    }
+    .success-card .btn {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-logo">
+        <img src="../assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../schedule.html">Schedule</a></li>
+        <li><a href="../registration.html">Register</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+        <li><a href="../registration.html" class="navbar-cta">Join the Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Success Page -->
+  <section class="success-page">
+    <div class="container">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <h1>Thank You for Registering!</h1>
+        <p class="subtitle">Your payment has been processed successfully.</p>
+
+        <ol class="success-steps">
+          <li>A confirmation email has been sent to the guardian on file.</li>
+          <li>Your athlete's registration status is now <strong>Paid</strong>.</li>
+          <li>We'll reach out with practice details before the first session.</li>
+        </ol>
+
+        <a href="../registration.html" class="btn btn-primary">Back to Registration</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+          <p>Youth shooting sports team based at Ben Avery Shooting Range, Phoenix, AZ. Building focus, discipline, and safe handling skills.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../schedule.html">Schedule</a></li>
+            <li><a href="../registration.html">Register</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:team.claycrushers@gmail.com">team.claycrushers@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Ben Avery Clay Crushers. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

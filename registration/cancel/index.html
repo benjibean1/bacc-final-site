@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Cancelled — Ben Avery Clay Crushers</title>
+  <meta name="description" content="Your BACC registration payment was cancelled.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Registration Cancelled — Ben Avery Clay Crushers">
+  <meta property="og:description" content="Your payment was not completed. You can try again or contact us.">
+  <meta property="og:image" content="https://benaveryclaycrushers.org/assets/Herobanner2.png">
+  <meta property="og:url" content="https://benaveryclaycrushers.org/registration/cancel">
+  <meta property="og:site_name" content="Ben Avery Clay Crushers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Registration Cancelled — Ben Avery Clay Crushers">
+  <meta name="twitter:description" content="Your payment was not completed. You can try again or contact us.">
+  <meta name="twitter:image" content="https://benaveryclaycrushers.org/assets/Herobanner2.png">
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .cancel-page {
+      padding: 4rem 0;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+    }
+    .cancel-card {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-md);
+      border-top: 4px solid var(--accent-orange);
+    }
+    .cancel-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.5rem;
+      background: #fff3cd;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cancel-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+    .cancel-card h1 {
+      color: var(--primary-blue);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .cancel-card .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+    .cancel-card .btn {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-logo">
+        <img src="../assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../schedule.html">Schedule</a></li>
+        <li><a href="../registration.html">Register</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+        <li><a href="../registration.html" class="navbar-cta">Join the Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Cancel Page -->
+  <section class="cancel-page">
+    <div class="container">
+      <div class="cancel-card">
+        <div class="cancel-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e06b10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4"/>
+            <path d="M12 16h.01"/>
+          </svg>
+        </div>
+        <h1>Payment Not Completed</h1>
+        <p class="subtitle">Your registration payment was not processed.</p>
+
+        <p style="color: var(--text-dark); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem;">
+          No charges were made. You can try the registration again, or contact us if you
+          ran into any issues. A payment link will also be emailed to you shortly if it hasn't already been sent.
+        </p>
+
+        <a href="../registration.html" class="btn btn-primary">Try Again</a>
+        <a href="../contact.html" class="btn" style="margin-left: 0.75rem; border: 2px solid var(--primary-blue); color: var(--primary-blue);">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+          <p>Youth shooting sports team based at Ben Avery Shooting Range, Phoenix, AZ. Building focus, discipline, and safe handling skills.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../schedule.html">Schedule</a></li>
+            <li><a href="../registration.html">Register</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:team.claycrushers@gmail.com">team.claycrushers@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Ben Avery Clay Crushers. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
