@@ -148,6 +148,10 @@
               <input type="text" name="graduation_year" placeholder="e.g., 2028" required>
             </div>
             <div class="form-group">
+              <label>Date of Birth <span class="required">*</span></label>
+              <input type="text" name="date_of_birth" placeholder="MM/DD/YYYY" required pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/[0-9]{4}" title="Please enter a valid date in MM/DD/YYYY format (e.g., 01/15/2010)">
+            </div>
+            <div class="form-group">
               <label>Shirt Size <span class="required">*</span></label>
               <select name="shirt_size" required>
                 <option value="">Select...</option>
@@ -359,6 +363,18 @@
         return;
       }
 
+      // Validate date format matches expected pattern
+      const dobInput = form.querySelector('input[name="date_of_birth"]');
+      if (dobInput && dobInput.value) {
+        const dobPattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/[0-9]{4}$/;
+        if (!dobPattern.test(dobInput.value.trim())) {
+          showFormMessage('Invalid date of birth format. Please use MM/DD/YYYY (e.g., 01/15/2010).', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Registration';
+          return;
+        }
+      }
+
       // Build the data object
       const formData = new FormData(form);
       const data = {};
@@ -367,6 +383,34 @@
           data[key] = value.trim();
         }
       });
+
+      // Convert field names to match backend API expectations
+      if (data.cell_phone) {
+        data.phone = data.cell_phone;
+        delete data.cell_phone;
+      }
+      // practice_day → practice_days with value mapping
+      if (data.practice_day) {
+        const practiceMap = { 'Sunday': 'sunday', 'Tuesday': 'tuesday', 'Both': 'sunday_tuesday' };
+        data.practice_days = practiceMap[data.practice_day] || data.practice_day.toLowerCase();
+        delete data.practice_day;
+      }
+      // athlete_type must be lowercase for the API
+      if (data.athlete_type) {
+        data.athlete_type = data.athlete_type.toLowerCase();
+      }
+
+      // Convert date_of_birth from MM/DD/YYYY to YYYY-MM-DD for the API
+      if (data.date_of_birth) {
+        const dobMatch = data.date_of_birth.match(/^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/([0-9]{4})$/);
+        if (!dobMatch) {
+          showFormMessage('Invalid date of birth format. Please use MM/DD/YYYY (e.g., 01/15/2010).', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Registration';
+          return;
+        }
+        data.date_of_birth = `${dobMatch[3]}-${dobMatch[1]}-${dobMatch[2]}`;
+      }
 
       // Set disabled state
       submitBtn.disabled = true;
