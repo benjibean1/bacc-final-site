@@ -450,14 +450,11 @@
         const result = await response.json();
 
         if (response.ok && result.athlete_id) {
-          showFormMessage(`
-            <strong>Registration Successful!</strong><br>
-            Athlete ID: ${result.athlete_id}<br>
-            Division: ${result.division}<br>
-            ${result.pricing && result.pricing.practice_day_info ? 'Pricing: ' + result.pricing.practice_day_info : ''}
-          `, 'success');
-          form.reset();
-          document.getElementById('replacement-vest-group').style.display = 'none';
+          // Redirect to success page with registration summary (no PII)
+          const practiceLabel = data.practice_day ? data.practice_day : '';
+          const url = `regsuccess.html?athlete_name=${encodeURIComponent(result.registration.first_name + ' ' + result.registration.last_name)}&division=${encodeURIComponent(result.registration.division || '')}&grade=${encodeURIComponent(result.registration.grade || '')}&practice_days=${encodeURIComponent(result.registration.practice_days || '')}&total_fee=${encodeURIComponent(result.registration.total_fee || '')}&athlete_id=${result.athlete_id}`;
+          window.location.href = url;
+          return;
         } else {
           showFormMessage(result.error || 'Registration failed. Please try again.', 'error');
         }
