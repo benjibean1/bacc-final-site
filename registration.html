@@ -395,6 +395,11 @@
       if (data.athlete_type) {
         data.athlete_type = data.athlete_type.toLowerCase();
       }
+      // cell_phone → phone for the API
+      if (data.cell_phone) {
+        data.phone = data.cell_phone;
+        delete data.cell_phone;
+      }
       // Build nested guardian object from flat form fields
       if (data.guardian1_first) {
         data.guardian = {
