@@ -125,7 +125,7 @@
             </div>
             <div class="form-group">
               <label>Current Grade <span class="required">*</span></label>
-              <select name="current_grade" required>
+              <select name="grade" required>
                 <option value="">Select...</option>
                 <option value="4">4th Grade</option>
                 <option value="5">5th Grade</option>
@@ -141,7 +141,7 @@
             </div>
             <div class="form-group">
               <label>School Name <span class="required">*</span></label>
-              <input type="text" name="school_name" required>
+              <input type="text" name="school" required>
             </div>
             <div class="form-group">
               <label>Graduation Year <span class="required">*</span></label>
@@ -385,10 +385,6 @@
       });
 
       // Convert field names to match backend API expectations
-      if (data.cell_phone) {
-        data.phone = data.cell_phone;
-        delete data.cell_phone;
-      }
       // practice_day → practice_days with value mapping
       if (data.practice_day) {
         const practiceMap = { 'Sunday': 'sunday', 'Tuesday': 'tuesday', 'Both': 'sunday_tuesday' };
@@ -398,6 +394,27 @@
       // athlete_type must be lowercase for the API
       if (data.athlete_type) {
         data.athlete_type = data.athlete_type.toLowerCase();
+      }
+      // Build nested guardian object from flat form fields
+      if (data.guardian1_first) {
+        data.guardian = {
+          first_name: data.guardian1_first,
+          last_name: data.guardian1_last,
+          email: data.guardian1_email,
+          phone: data.guardian1_cell,
+          relationship: 'Parent',
+        };
+        delete data.guardian1_first;
+        delete data.guardian1_last;
+        delete data.guardian1_email;
+        delete data.guardian1_cell;
+      }
+      // Build replacement_vest add-on from flat form field
+      if (data.replacement_vest) {
+        data.add_ons = {
+          replacement_vest: data.replacement_vest === 'Yes',
+        };
+        delete data.replacement_vest;
       }
 
       // Convert date_of_birth from MM/DD/YYYY to YYYY-MM-DD for the API
