@@ -452,7 +452,7 @@
         if (response.ok && result.athlete_id) {
           // Redirect to success page with registration summary (no PII)
           const practiceLabel = data.practice_day ? data.practice_day : '';
-          const url = `regsuccess.html?athlete_name=${encodeURIComponent(result.registration.first_name + ' ' + result.registration.last_name)}&division=${encodeURIComponent(result.registration.division || '')}&grade=${encodeURIComponent(result.registration.grade || '')}&practice_days=${encodeURIComponent(result.registration.practice_days || '')}&total_fee=${encodeURIComponent(result.registration.total_fee || '')}&athlete_id=${result.athlete_id}`;
+          const url = `regsuccess.html?athlete_name=${encodeURIComponent(result.registration.first_name + ' ' + result.registration.last_name)}&division=${encodeURIComponent(result.registration.division || '')}&grade=${encodeURIComponent(result.registration.grade || '')}&practice_days=${encodeURIComponent(result.registration.practice_days || '')}&total_fee=${encodeURIComponent(result.registration.total_fee || '')}&athlete_id=${result.athlete_id}&payment_url=${encodeURIComponent(result.payment_url || '')}`;
           window.location.href = url;
           return;
         } else {
