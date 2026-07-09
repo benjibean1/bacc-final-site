@@ -547,6 +547,30 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #f5c6cb;
 }
 
+/* ===== Photo/Video Consent Box ===== */
+.consent-box {
+  background: var(--bg-light);
+  border-left: 4px solid var(--primary-blue);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-dark);
+}
+.consent-label {
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.consent-box p {
+  margin-bottom: 0.75rem;
+}
+.consent-box p:last-child {
+  margin-bottom: 0;
+}
+
 /* ===== Schedule Page ===== */
 .schedule-table-wrapper {
   overflow-x: auto;
