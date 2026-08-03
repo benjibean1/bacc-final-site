@@ -63,115 +63,104 @@
         <div class="loading">Loading your registration...</div>
     </div>
     <script>
-        // GitHub Pages can't do dynamic routing, so we use query param:
-        // /pay/<token> → 404.html → redirects to pay/index.html?token=<token>
         function getQueryParam(name) {
             var params = new URLSearchParams(window.location.search);
             return params.get(name);
         }
-        
-        // Also check path for direct access (via Cloudflare, not GH Pages)
-        var pathParts = window.location.pathname.split('/');
-        var pathToken = pathParts[pathParts.length - 1];
-        var token = getQueryParam('token') || pathToken;
-        
-        // API URL — use full URL since page may be on GitHub Pages
+
+        // Get token from ?token= param (from 404.html redirect) or from path (direct access)
+        var token = getQueryParam('token');
+        if (!token) {
+            var pathParts = window.location.pathname.split('/');
+            var pathToken = pathParts[pathParts.length - 1];
+            if (pathToken && pathToken !== 'index.html' && pathToken !== 'pay') {
+                token = pathToken;
+            }
+        }
+
         var API_BASE = 'https://api.benaveryclaycrushers.org';
-        
-        if (!token || token === 'pay' || token === 'index.html') {
-            document.getElementById('app').innerHTML = `
-                <h1>Invalid Payment Link</h1>
-                <p class="subtitle">This payment link is not valid. Please check your email or contact the team.</p>
-            `;
+
+        if (!token) {
+            document.getElementById('app').innerHTML =
+                '<h1>Invalid Payment Link</h1>' +
+                '<p class="subtitle">This payment link is not valid. Please check your email or contact the team.</p>';
         } else {
-            // Fetch athlete and payment info
             fetch(API_BASE + '/api/pay/' + token)
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     var app = document.getElementById('app');
-                    
+
                     if (data.error) {
-                        app.innerHTML = `
-                            <h1>Payment Link Not Found</h1>
-                            <p class="subtitle">${data.error}</p>
-                            <p class="subtitle">Please check your email for the correct link, or contact us at info@benaveryclaycrushers.org.</p>
-                        `;
+                        app.innerHTML =
+                            '<h1>Payment Link Not Found</h1>' +
+                            '<p class="subtitle">' + data.error + '</p>' +
+                            '<p class="subtitle">Please check your email for the correct link, or contact us at info@benaveryclaycrushers.org.</p>';
                         return;
                     }
-                    
+
                     if (data.paid) {
-                        app.innerHTML = `
-                            <div class="already-paid">
-                                <div class="icon">✓</div>
-                                <h1>Already Paid</h1>
-                                <p class="subtitle">This registration has already been paid.</p>
-                                <div class="info-group">
-                                    <div class="info-label">Athlete</div>
-                                    <div class="info-value">${data.athlete.first_name} ${data.athlete.last_name}</div>
-                                </div>
-                                <div class="info-group">
-                                    <div class="info-label">Amount Paid</div>
-                                    <div class="amount">$${(data.athlete.amount_paid || 0).toFixed(2)}</div>
-                                </div>
-                                <p class="footer">Thank you for your payment! Questions? Contact info@benaveryclaycrushers.org</p>
-                            </div>
-                        `;
+                        app.innerHTML =
+                            '<div class="already-paid">' +
+                                '<div class="icon">&#10003;</div>' +
+                                '<h1>Already Paid</h1>' +
+                                '<p class="subtitle">This registration has already been paid.</p>' +
+                                '<div class="info-group">' +
+                                    '<div class="info-label">Athlete</div>' +
+                                    '<div class="info-value">' + data.athlete.first_name + ' ' + data.athlete.last_name + '</div>' +
+                                '</div>' +
+                                '<div class="info-group">' +
+                                    '<div class="info-label">Amount Paid</div>' +
+                                    '<div class="amount">$' + (data.athlete.amount_paid || 0).toFixed(2) + '</div>' +
+                                '</div>' +
+                                '<p class="footer">Thank you for your payment! Questions? Contact info@benaveryclaycrushers.org</p>' +
+                            '</div>';
                         return;
                     }
-                    
+
                     var athlete = data.athlete;
                     var guardian = data.guardian || {};
-                    
-                    app.innerHTML = `
-                        <h1>Pay Your Registration</h1>
-                        <p class="subtitle">Ben Avery Clay Crushers</p>
-                        
-                        <div class="info-group">
-                            <div class="info-label">Athlete</div>
-                            <div class="info-value">${athlete.first_name} ${athlete.last_name}</div>
-                        </div>
-                        <div class="info-group">
-                            <div class="info-label">Division</div>
-                            <div class="info-value">${athlete.division || 'TBD'}</div>
-                        </div>
-                        <div class="info-group">
-                            <div class="info-label">Practice Days</div>
-                            <div class="info-value">${(athlete.practice_days || '').replace(/_/g, ' ')}</div>
-                        </div>
-                        <div class="info-group">
-                            <div class="info-label">Guardian</div>
-                            <div class="info-value">${guardian.first_name || ''} ${guardian.last_name || ''}</div>
-                        </div>
-                        <div class="info-group">
-                            <div class="info-label">Total Fee</div>
-                            <div class="amount">$${(athlete.total_fee || 0).toFixed(2)}</div>
-                        </div>
-                        
-                        <p style="margin: 16px 0; color: #555; font-size: 0.95rem;">
-                            By clicking "Pay Now" you will be taken to PayPal to complete your registration payment securely.
-                        </p>
-                        
-                        <a href="${data.payment_url || '#'}" class="btn" id="pay-btn">
-                            Pay Now via PayPal
-                        </a>
-                        
-                        <p class="footer">Questions? Contact info@benaveryclaycrushers.org</p>
-                    `;
-                    
-                    // Track click
+
+                    app.innerHTML =
+                        '<h1>Pay Your Registration</h1>' +
+                        '<p class="subtitle">Ben Avery Clay Crushers</p>' +
+                        '<div class="info-group">' +
+                            '<div class="info-label">Athlete</div>' +
+                            '<div class="info-value">' + athlete.first_name + ' ' + athlete.last_name + '</div>' +
+                        '</div>' +
+                        '<div class="info-group">' +
+                            '<div class="info-label">Division</div>' +
+                            '<div class="info-value">' + (athlete.division || 'TBD') + '</div>' +
+                        '</div>' +
+                        '<div class="info-group">' +
+                            '<div class="info-label">Practice Days</div>' +
+                            '<div class="info-value">' + (athlete.practice_days || '').replace(/_/g, ' ') + '</div>' +
+                        '</div>' +
+                        '<div class="info-group">' +
+                            '<div class="info-label">Guardian</div>' +
+                            '<div class="info-value">' + (guardian.first_name || '') + ' ' + (guardian.last_name || '') + '</div>' +
+                        '</div>' +
+                        '<div class="info-group">' +
+                            '<div class="info-label">Total Fee</div>' +
+                            '<div class="amount">$' + (athlete.total_fee || 0).toFixed(2) + '</div>' +
+                        '</div>' +
+                        '<p style="margin: 16px 0; color: #555; font-size: 0.95rem;">' +
+                            'By clicking "Pay Now" you will be taken to PayPal to complete your registration payment securely.' +
+                        '</p>' +
+                        '<a href="' + (data.payment_url || '#') + '" class="btn" id="pay-btn">Pay Now via PayPal</a>' +
+                        '<p class="footer">Questions? Contact info@benaveryclaycrushers.org</p>';
+
                     document.getElementById('pay-btn').addEventListener('click', function() {
                         fetch(API_BASE + '/api/pay/' + token + '/notify', { method: 'POST' });
                     });
                 })
                 .catch(function(err) {
-                    console.error('Fetch error:', err);
-                    document.getElementById('app').innerHTML = `
-                        <div class="error">
-                            <h1>Error Loading Payment</h1>
-                            <p>Unable to load your registration. Please try again or contact the team at info@benaveryclaycrushers.org.</p>
-                            <p style="margin-top:10px;font-size:0.8rem;color:#888;">Token: ${token}</p>
-                        </div>
-                    `;
+                    console.error('Error:', err);
+                    document.getElementById('app').innerHTML =
+                        '<div class="error">' +
+                            '<h1>Error Loading Payment</h1>' +
+                            '<p>Unable to load your registration. Please contact the team at info@benaveryclaycrushers.org.</p>' +
+                            '<p style="font-size:0.8rem; color:#888; margin-top:8px;">Token: ' + token + '</p>' +
+                        '</div>';
                 });
         }
     </script>

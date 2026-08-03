@@ -4,24 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
-    <script>
-        // This page acts as a 404 handler for /pay/<token> URLs.
-        // GitHub Pages serves 404.html for any unmatched route.
-        // We detect payment URLs and redirect to the actual payment page with ?token= param.
-        var path = window.location.pathname;
-        var origin = window.location.origin;
-        if (path.indexOf('/pay/') === 0) {
-            var parts = path.split('/');
-            var token = parts[2] || '';
-            if (token && token !== 'index.html' && token !== 'pay') {
-                window.location.href = origin + '/pay/index.html?token=' + token;
-            } else {
-                window.location.href = origin + '/pay/index.html';
-            }
-        }
-    </script>
 </head>
 <body>
-    <p>Loading...</p>
+<script>
+    // This 404.html acts as a redirect handler for /pay/<token> URLs.
+    // GitHub Pages serves 404.html for any unmatched path.
+    var path = window.location.pathname;
+    if (path.indexOf('/pay/') === 0 && path !== '/pay/index.html') {
+        var parts = path.split('/');
+        var token = parts[2];
+        if (token && token !== '' && token !== 'index.html') {
+            window.location.href = '/pay/index.html?token=' + token;
+        } else {
+            window.location.href = '/pay/index.html';
+        }
+    }
+</script>
 </body>
 </html>
