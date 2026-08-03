@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Your Registration — Ben Avery Clay Crushers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 480px;
+            width: 100%;
+            padding: 32px;
+        }
+        h1 { font-size: 1.4rem; margin-bottom: 8px; color: #333; }
+        .subtitle { color: #666; margin-bottom: 24px; font-size: 0.95rem; }
+        .info-group { margin-bottom: 16px; }
+        .info-label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-value { font-size: 1.1rem; color: #333; font-weight: 500; }
+        .amount { font-size: 1.6rem; font-weight: 700; color: #2c6e49; margin: 16px 0; }
+        .already-paid {
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .already-paid .icon { font-size: 2rem; margin-bottom: 8px; }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #0070ba;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .btn:hover { background: #005ea6; }
+        .loading { text-align: center; color: #666; }
+        .error { color: #d32f2f; background: #ffebee; padding: 12px; border-radius: 8px; }
+        .footer { text-align: center; margin-top: 24px; font-size: 0.85rem; color: #999; }
+    </style>
+</head>
+<body>
+    <div class="card" id="app">
+        <div class="loading">Loading your registration...</div>
+    </div>
+    <script>
+        // GitHub Pages can't do dynamic routing, so we use query param:
+        // /pay/<token> → 404.html → redirects to pay/index.html?token=<token>
+        function getQueryParam(name) {
+            var params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+        
+        // Also check path for direct access (via Cloudflare, not GH Pages)
+        var pathParts = window.location.pathname.split('/');
+        var pathToken = pathParts[pathParts.length - 1];
+        var token = getQueryParam('token') || pathToken;
+        
+        if (!token || token === 'pay' || token === 'index.html') {
+            document.getElementById('app').innerHTML = `
+                <h1>Invalid Payment Link</h1>
+                <p class="subtitle">This payment link is not valid. Please check your email or contact the team.</p>
+            `;
+        } else {
+            // Fetch athlete and payment info
+            fetch('/api/pay/' + token)
+                .then(res => res.json())
+                .then(data => {
+                    var app = document.getElementById('app');
+                    
+                    if (data.error) {
+                        app.innerHTML = `
+                            <h1>Payment Link Not Found</h1>
+                            <p class="subtitle">${data.error}</p>
+                            <p class="subtitle">Please check your email for the correct link, or contact us at info@benaveryclaycrushers.org.</p>
+                        `;
+                        return;
+                    }
+                    
+                    if (data.paid) {
+                        app.innerHTML = `
+                            <div class="already-paid">
+                                <div class="icon">✓</div>
+                                <h1>Already Paid</h1>
+                                <p class="subtitle">This registration has already been paid.</p>
+                                <div class="info-group">
+                                    <div class="info-label">Athlete</div>
+                                    <div class="info-value">${data.athlete.first_name} ${data.athlete.last_name}</div>
+                                </div>
+                                <div class="info-group">
+                                    <div class="info-label">Amount Paid</div>
+                                    <div class="amount">$${(data.athlete.amount_paid || 0).toFixed(2)}</div>
+                                </div>
+                                <p class="footer">Thank you for your payment! Questions? Contact info@benaveryclaycrushers.org</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    var athlete = data.athlete;
+                    var guardian = data.guardian || {};
+                    
+                    app.innerHTML = `
+                        <h1>Pay Your Registration</h1>
+                        <p class="subtitle">Ben Avery Clay Crushers</p>
+                        
+                        <div class="info-group">
+                            <div class="info-label">Athlete</div>
+                            <div class="info-value">${athlete.first_name} ${athlete.last_name}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Division</div>
+                            <div class="info-value">${athlete.division || 'TBD'}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Practice Days</div>
+                            <div class="info-value">${(athlete.practice_days || '').replace(/_/g, ' ')}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Guardian</div>
+                            <div class="info-value">${guardian.first_name || ''} ${guardian.last_name || ''}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Total Fee</div>
+                            <div class="amount">$${(athlete.total_fee || 0).toFixed(2)}</div>
+                        </div>
+                        
+                        <p style="margin: 16px 0; color: #555; font-size: 0.95rem;">
+                            By clicking "Pay Now" you will be taken to PayPal to complete your registration payment securely.
+                        </p>
+                        
+                        <a href="${data.payment_url || '#'}" class="btn" id="pay-btn">
+                            Pay Now via PayPal
+                        </a>
+                        
+                        <p class="footer">Questions? Contact info@benaveryclaycrushers.org</p>
+                    `;
+                    
+                    // Track click
+                    document.getElementById('pay-btn').addEventListener('click', function() {
+                        fetch('/api/pay/' + token + '/notify', { method: 'POST' });
+                    });
+                })
+                .catch(err => {
+                    document.getElementById('app').innerHTML = `
+                        <div class="error">
+                            <h1>Error Loading Payment</h1>
+                            <p>Unable to load your registration. Please try again or contact the team.</p>
+                        </div>
+                    `;
+                });
+        }
+    </script>
+</body>
+</html>
