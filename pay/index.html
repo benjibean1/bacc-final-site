@@ -75,6 +75,9 @@
         var pathToken = pathParts[pathParts.length - 1];
         var token = getQueryParam('token') || pathToken;
         
+        // API URL — use full URL since page may be on GitHub Pages
+        var API_BASE = 'https://api.benaveryclaycrushers.org';
+        
         if (!token || token === 'pay' || token === 'index.html') {
             document.getElementById('app').innerHTML = `
                 <h1>Invalid Payment Link</h1>
@@ -82,9 +85,9 @@
             `;
         } else {
             // Fetch athlete and payment info
-            fetch('/api/pay/' + token)
-                .then(res => res.json())
-                .then(data => {
+            fetch(API_BASE + '/api/pay/' + token)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
                     var app = document.getElementById('app');
                     
                     if (data.error) {
@@ -157,14 +160,16 @@
                     
                     // Track click
                     document.getElementById('pay-btn').addEventListener('click', function() {
-                        fetch('/api/pay/' + token + '/notify', { method: 'POST' });
+                        fetch(API_BASE + '/api/pay/' + token + '/notify', { method: 'POST' });
                     });
                 })
-                .catch(err => {
+                .catch(function(err) {
+                    console.error('Fetch error:', err);
                     document.getElementById('app').innerHTML = `
                         <div class="error">
                             <h1>Error Loading Payment</h1>
-                            <p>Unable to load your registration. Please try again or contact the team.</p>
+                            <p>Unable to load your registration. Please try again or contact the team at info@benaveryclaycrushers.org.</p>
+                            <p style="margin-top:10px;font-size:0.8rem;color:#888;">Token: ${token}</p>
                         </div>
                     `;
                 });

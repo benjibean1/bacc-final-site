@@ -7,16 +7,16 @@
     <script>
         // This page acts as a 404 handler for /pay/<token> URLs.
         // GitHub Pages serves 404.html for any unmatched route.
-        // We detect payment URLs and load the actual payment page.
+        // We detect payment URLs and redirect to the actual payment page with ?token= param.
         var path = window.location.pathname;
+        var origin = window.location.origin;
         if (path.indexOf('/pay/') === 0) {
             var parts = path.split('/');
             var token = parts[2] || '';
-            if (token) {
-                window.location.href = 'pay/index.html?token=' + token;
+            if (token && token !== 'index.html' && token !== 'pay') {
+                window.location.href = origin + '/pay/index.html?token=' + token;
             } else {
-                // /pay/ with no token — redirect to the payment page
-                window.location.href = 'pay/index.html';
+                window.location.href = origin + '/pay/index.html';
             }
         }
     </script>
