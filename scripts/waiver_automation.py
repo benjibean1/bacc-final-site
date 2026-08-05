@@ -1,10 +1,11 @@
 """
-BACC Waiver Automation Script - Corrected
-==========================================
+BACC Waiver Automation Script - Drive-based detection
+======================================================
 Fixes:
-1. Google eSignature creates a PDF copy with timestamp in Pending folder
-2. We keep the PDF, delete the Google Doc from Completed
-3. DB should store the PDF file_id (not the Google Doc)
+1. Google doesn't reliably send completion emails to admin inbox
+2. Instead, Google creates a PDF in Pending folder with timestamp suffix
+3. We detect completed waivers by finding PDFs in Pending folder
+4. Keep PDF, delete Google Doc, update DB
 
 Author: Clay (Hermes)
 Last updated: 2026-08-04
@@ -12,9 +13,11 @@ Last updated: 2026-08-04
 import json
 import os
 import re
+import sys
+import csv
 import subprocess
 import tempfile
-from datetime import datetime
+from datetime import datetime, timedelta
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload, MediaIoBaseUpload, MediaIoBaseDownload
 from google.oauth2.credentials import Credentials
@@ -25,10 +28,9 @@ from google.oauth2.credentials import Credentials
 TOKEN_PATH = '/opt/hermes-data/bacc/.hermes/google_token.json'
 PENDING_FOLDER_ID = '1G8zF9A38qqvodinXTL3_uEHQn1reuFhx'
 COMPLETED_FOLDER_ID = '1XBYOGjzrZPoxpfnRZY2Ute9aNKsfJpbX'
-TEMPLATE_DOC_ID = '1Yz8TGj7lbcsPuc4_RTvUofHU_-DtHg2VMNeODPMD6SQ'  # BACC 2026-27 Waiver Documents (Final)
-ARCHIVE_LABEL = 'Label_1'  # Waiver-Done Gmail label
+TEMPLATE_DOC_ID = '1Yz8TGj7lbcsPuc4_RTvUofHU_-DtHg2VMNeODPMD6SQ'
+ARCHIVE_LABEL = 'Label_1'
 
-# LXC SSH config
 SSH_KEY = '/root/.ssh/id_proxmox'
 SSH_USER = 'root'
 SSH_HOST = '192.168.100.66'
@@ -49,7 +51,6 @@ def get_credentials():
     )
 
 def deploy_and_run_lxc_script(sql):
-    """Write SQL to a Python script, SCP to LXC, execute, return results as list of dicts."""
     script_content = f"""
 import sqlite3
 import json
@@ -64,20 +65,15 @@ print(json.dumps(rows))
     with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
         f.write(script_content)
         temp_path = f.name
-    
     remote_path = f'/tmp/bacc_waiver_{datetime.now().strftime("%Y%m%d_%H%M%S")}.py'
     scp_cmd = f"scp -i {SSH_KEY} -o StrictHostKeyChecking=no {temp_path} {SSH_USER}@{SSH_HOST}:{remote_path}"
     subprocess.run(scp_cmd, shell=True, capture_output=True, text=True)
-    
     ssh_cmd = f"ssh -i {SSH_KEY} -o StrictHostKeyChecking=no {SSH_USER}@{SSH_HOST} 'python3 {remote_path} && rm {remote_path}'"
     result = subprocess.run(ssh_cmd, shell=True, capture_output=True, text=True, timeout=30)
-    
     os.unlink(temp_path)
-    
     if result.returncode != 0:
         print(f"  SSH ERROR: {result.stderr[:200]}")
         return []
-    
     try:
         return json.loads(result.stdout.strip())
     except json.JSONDecodeError:
@@ -85,7 +81,6 @@ print(json.dumps(rows))
         return []
 
 def run_lxc_write(sql):
-    """Execute a write query on LXC via SSH."""
     script_content = f"""
 import sqlite3
 conn = sqlite3.connect('/opt/bacc/backend/data/bacc.db')
@@ -95,38 +90,55 @@ conn.commit()
 print('OK')
 conn.close()
 """
-    
     with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
         f.write(script_content)
         temp_path = f.name
-    
     remote_path = f'/tmp/bacc_waiver_{datetime.now().strftime("%Y%m%d_%H%M%S")}.py'
     scp_cmd = f"scp -i {SSH_KEY} -o StrictHostKeyChecking=no {temp_path} {SSH_USER}@{SSH_HOST}:{remote_path}"
     subprocess.run(scp_cmd, shell=True, capture_output=True, text=True)
-    
     ssh_cmd = f"ssh -i {SSH_KEY} -o StrictHostKeyChecking=no {SSH_USER}@{SSH_HOST} 'python3 {remote_path} && rm {remote_path}'"
     result = subprocess.run(ssh_cmd, shell=True, capture_output=True, text=True, timeout=30)
-    
     os.unlink(temp_path)
     return result.returncode == 0 and 'OK' in result.stdout
 
 def ensure_schema():
-    """Check and create needed columns in waived_documents table."""
-    columns = [
-        'status', 'sent_date', 'signed_date', 'reminder_count'
-    ]
-    
+    columns = ['status', 'sent_date', 'signed_date', 'reminder_count']
     rows = deploy_and_run_lxc_script("PRAGMA table_info(waived_documents)")
     existing = {r['name'] for r in rows}
-    
     for col in columns:
         if col not in existing:
-            if col == 'reminder_count':
-                dtype = 'INTEGER DEFAULT 0'
-            else:
-                dtype = 'TEXT'
+            dtype = 'INTEGER DEFAULT 0' if col == 'reminder_count' else 'TEXT'
             run_lxc_write(f"ALTER TABLE waived_documents ADD COLUMN {col} {dtype}")
             print(f"  Created column: waived_documents.{col}")
+
+def parse_pdf_filename(filename):
+    """Extract base doc name from PDF filename.
+    
+    PDF filenames have timestamp suffix: 'Waiver_Name_20260804 - 8/3/26, 1:36 PM'
+    We strip the timestamp to get the base: 'Waiver_Name_20260804'
+    """
+    # Strip timestamp: " - M/D/YY, H:MM AM/PM" or " - M/D/YY, H:MM:SS AM/PM"
+    return re.sub(r' - \d+/\d+/\d+,\s*\d+:\d+(?::\d+)?\s*[AP]M$', '', filename)
+
+def find_athlete_by_doc_name(doc_name, db_records):
+    """Match a doc name to a DB record by extracting athlete name.
+    
+    Doc names are formatted: Waiver_FirstLast_YYYYMMDD
+    We match FirstLast to athlete first_name + last_name
+    """
+    # Extract athlete name from doc name
+    match = re.match(r'Waiver_(.+)_(\d{8})', doc_name)
+    if not match:
+        return None
+    
+    athlete_part = match.group(1)
+    parts = athlete_part.rsplit('_', 1)  # Split from right: ['First', 'Last']
+    if len(parts) == 2:
+        first_name, last_name = parts
+        for rec in db_records:
+            if rec['first_name'].lower() == first_name.lower() and rec['last_name'].lower() == last_name.lower():
+                return rec
+    return None
 
 # ──────────────────────────────────────────────
 # PHASE 1: SEND NEW WAIVERS
@@ -177,140 +189,105 @@ def send_new_waivers(drive):
     return sent_count
 
 # ──────────────────────────────────────────────
-# PHASE 2: PROCESS COMPLETED WAIVERS
+# PHASE 2: DETECT COMPLETED WAIVERS (DRIVE-BASED)
 # ──────────────────────────────────────────────
 
-def process_completed_emails(gmail, drive):
-    print("\n=== PHASE 2: PROCESSING COMPLETED WAIVERS ===")
+def process_completed_drives(drive):
+    """Detect completed waivers by scanning Pending folder for PDFs with timestamps."""
+    print("\n=== PHASE 2: DETECTING COMPLETED WAIVERS ===")
     
-    try:
-        # Google sends "eSigned Document Ready: [DocName] - timestamp"
-        results = gmail.users().messages().list(
-            userId='me',
-            q='in:inbox subject:"eSigned Document Ready"',
-            labelIds=['INBOX']
+    # Get all pending athletes from DB
+    athletes = deploy_and_run_lxc_script("""
+        SELECT a.id, a.first_name, a.last_name,
+               wd.drive_file_id, wd.status
+        FROM athletes a
+        LEFT JOIN waived_documents wd ON wd.athlete_id = a.id AND wd.waiver_type = '2026-2027 Medical Consent'
+        WHERE wd.status = 'pending'
+    """)
+    
+    if not athletes:
+        print("  No pending waivers found in DB.")
+        return 0
+    
+    # Get athlete lookup (id -> first_last)
+    athlete_map = {}
+    for a in athletes:
+        athlete_map[a['id']] = f"{a['first_name']}_{a['last_name']}"
+    
+    # Scan Pending folder for PDFs with timestamp suffix (completed = PDF created)
+    pending_results = drive.files().list(
+        q=f"'{PENDING_FOLDER_ID}' in parents and mimeType = 'application/pdf' and trashed = false",
+        fields='files(id, name, modifiedTime)'
+    ).execute()
+    
+    pdf_files = pending_results.get('files', [])
+    print(f"  Found {len(pdf_files)} PDF(s) in Pending folder")
+    
+    # Track which athlete IDs we've already processed (avoid double-processing)
+    processed_athlete_ids = set()
+    completed_count = 0
+    
+    for pdf in pdf_files:
+        pdf_name = pdf['name']
+        
+        # Check if this PDF looks like a completed waiver (has timestamp suffix)
+        match = re.search(r' - \d+/\d+/\d+,\s*\d+:\d+(?::\d+)?\s*[AP]M$', pdf_name)
+        if not match:
+            print(f"  Skipping non-completion PDF: {pdf_name}")
+            continue
+        
+        # Extract base doc name
+        base_doc_name = parse_pdf_filename(pdf_name)
+        print(f"\n  Found completed: {pdf_name}")
+        print(f"    Base name: {base_doc_name}")
+        
+        # Find matching athlete in DB
+        athlete = find_athlete_by_doc_name(base_doc_name, athletes)
+        if not athlete:
+            print(f"  WARNING: No matching athlete found for {base_doc_name}")
+            continue
+        
+        athlete_id = athlete['id']
+        print(f"    Athlete ID: {athlete_id}")
+        
+        # Skip if already processed
+        if athlete_id in processed_athlete_ids:
+            print(f"    Already processed, skipping")
+            continue
+        
+        # Move PDF to Completed folder
+        drive.files().update(
+            fileId=pdf['id'],
+            addParents=COMPLETED_FOLDER_ID,
+            removeParents=PENDING_FOLDER_ID
+        ).execute()
+        print(f"    Moved PDF to Completed folder")
+        
+        # Delete the Google Doc from Pending or Completed
+        google_doc_results = drive.files().list(
+            q=f"(\'{PENDING_FOLDER_ID}\' in parents OR \'{COMPLETED_FOLDER_ID}\' in parents) and name = \'{base_doc_name}\' and mimeType contains \'google-apps.document\' and trashed = false",
+            fields='files(id, name)'
         ).execute()
         
-        messages = results.get('messages', [])
-        if not messages:
-            print("  No completion emails found.")
-            return 0
+        for gd in google_doc_results.get('files', []):
+            drive.files().delete(fileId=gd['id']).execute()
+            print(f"    Deleted Google Doc: {gd['name']}")
         
-        # Get all pending waivers from DB
-        pending_waivers = deploy_and_run_lxc_script(
-            "SELECT athlete_id, drive_file_id, guardian_email FROM waived_documents WHERE status = 'pending'"
-        )
-        file_map = {row['drive_file_id']: row for row in pending_waivers}
+        # Update DB
+        run_lxc_write(f"""
+            UPDATE waived_documents 
+            SET status = 'completed', 
+                signed_date = '{datetime.now().strftime('%Y-%m-%d')}',
+                drive_file_id = '{pdf['id']}'
+            WHERE athlete_id = {athlete_id}
+        """)
+        print(f"    DB UPDATED: status=completed, signed_date={datetime.now().strftime('%Y-%m-%d')}, PDF_id={pdf['id']}")
         
-        completed_count = 0
-        for msg_info in messages:
-            msg = gmail.users().messages().get(
-                userId='me', id=msg_info['id'],
-                format='metadata', metadataHeaders=['Subject']
-            ).execute()
-            
-            subject = next(
-                (h['value'] for h in msg['payload']['headers'] if h['name'].lower() == 'subject'), ''
-            )
-            
-            if 'eSigned Document Ready:' not in subject:
-                continue
-            
-            # Extract doc name from: eSigned Document Ready: "Waiver_Name_20260804 - 8/3/26, 8:29 PM"
-            match = re.search(r'eSigned Document Ready: "([^"]+)"', subject)
-            if not match:
-                continue
-            
-            full_doc_name = match.group(1)
-            # Strip timestamp suffix
-            doc_name = re.sub(r' - \d+/\d+/\d+,\s*\d+:\d+\s*[AP]M$', '', full_doc_name)
-            
-            # Search for the PDF in Pending folder (Google saves PDF here with timestamp)
-            pending_results = drive.files().list(
-                q=f"'{PENDING_FOLDER_ID}' in parents and name = '{full_doc_name}' and mimeType = 'application/pdf' and trashed = false",
-                fields='files(id, name)'
-            ).execute()
-            
-            files = pending_results.get('files', [])
-            if not files:
-                print(f"  No PDF found for: {doc_name}")
-                continue
-            
-            pdf_id = files[0]['id']
-            print(f"  Found PDF: {files[0]['name']} (ID: {pdf_id})")
-            
-            # Find matching DB record by searching for any pending record
-            # that matches this athlete (we match by athlete name pattern)
-            db_record = None
-            for fid, record in file_map.items():
-                # Check if this record's file_id matches any pending file
-                pending_check = drive.files().list(
-                    q=f"'{PENDING_FOLDER_ID}' in parents and id = '{fid}' and trashed = false",
-                    fields='files(id)'
-                ).execute()
-                if pending_check.get('files'):
-                    # This file still exists in Pending - check if it matches this athlete
-                    # We'll just take the first match since there should only be one pending per athlete
-                    db_record = record
-                    break
-            
-            if not db_record:
-                # Fallback: try to match by athlete name in doc name
-                parts = doc_name.replace('Waiver_', '').split('_')
-                if len(parts) >= 2:
-                    athlete_pattern = f"{parts[0]}_{parts[1]}"
-                    for fid, record in file_map.items():
-                        if athlete_pattern.lower() in fid.lower():
-                            db_record = record
-                            break
-            
-            if not db_record:
-                print(f"  No DB record found for: {doc_name}")
-                continue
-            
-            # Move PDF to Completed folder
-            drive.files().update(
-                fileId=pdf_id,
-                addParents=COMPLETED_FOLDER_ID,
-                removeParents=PENDING_FOLDER_ID
-            ).execute()
-            print(f"  Moved PDF to Completed folder")
-            
-            # Find and delete the Google Doc from Pending or Completed
-            google_doc_results = drive.files().list(
-                q=f"(\'{PENDING_FOLDER_ID}\' in parents OR \'{COMPLETED_FOLDER_ID}\' in parents) and name = \'{doc_name}\' and mimeType contains \'google-apps.document\' and trashed = false",
-                fields='files(id, name)'
-            ).execute()
-            
-            google_docs = google_doc_results.get('files', [])
-            for gd in google_docs:
-                drive.files().delete(fileId=gd['id']).execute()
-                print(f"  Deleted Google Doc: {gd['name']}")
-            
-            # Update DB with PDF file_id
-            run_lxc_write(f"""
-                UPDATE waived_documents 
-                SET status = 'completed', signed_date = '{datetime.now().strftime('%Y-%m-%d')}',
-                    drive_file_id = '{pdf_id}'
-                WHERE athlete_id = {db_record['athlete_id']}
-            """)
-            print(f"  DB UPDATED: athlete_id={db_record['athlete_id']}, status=completed, PDF_id={pdf_id}")
-            
-            # Archive email
-            gmail.users().messages().modify(
-                userId='me', id=msg['id'],
-                body={'removeLabelIds': ['INBOX'], 'addLabelIds': [ARCHIVE_LABEL]}
-            ).execute()
-            print(f"  Archived email")
-            
-            completed_count += 1
-        
-        print(f"  Total completed waivers processed: {completed_count}")
-        return completed_count
-        
-    except Exception as e:
-        print(f"  ERROR processing emails: {e}")
-        return 0
+        processed_athlete_ids.add(athlete_id)
+        completed_count += 1
+    
+    print(f"\n  Total completed waivers processed: {completed_count}")
+    return completed_count
 
 # ──────────────────────────────────────────────
 # PHASE 3: STATUS REPORT
@@ -345,7 +322,6 @@ def generate_status_report():
     with open(temp_csv, 'w', newline='') as f:
         csv.writer(f).writerows(csv_data)
     
-    # Upload to Drive
     drive = build('drive', 'v3', credentials=get_credentials())
     drive.files().create(
         body={
@@ -373,13 +349,11 @@ def main():
     try:
         creds = get_credentials()
         drive = build('drive', 'v3', credentials=creds)
-        gmail = build('gmail', 'v1', credentials=creds)
         
-        # Ensure schema
         ensure_schema()
         
         send_new_waivers(drive)
-        process_completed_emails(gmail, drive)
+        process_completed_drives(drive)
         generate_status_report()
         
         print("\n" + "=" * 60)
