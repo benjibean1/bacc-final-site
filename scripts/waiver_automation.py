@@ -1,14 +1,12 @@
 """
-BACC Waiver Automation Script - Drive-based detection
+BACC Waiver Automation Script - Gmail-based detection
 ======================================================
-Fixes:
-1. Google doesn't reliably send completion emails to admin inbox
-2. Instead, Google creates a PDF in Pending folder with timestamp suffix
-3. We detect completed waivers by finding PDFs in Pending folder
-4. Keep PDF, delete Google Doc, update DB
+Uses Gmail API to detect completed eSignature waivers.
+Looks for emails from esignature-noreply@google.com with 
+subject "eSigned Document Ready: [DocName]"
 
 Author: Clay (Hermes)
-Last updated: 2026-08-04
+Last updated: 2026-08-06
 """
 import json
 import os
@@ -17,7 +15,8 @@ import sys
 import csv
 import subprocess
 import tempfile
-from datetime import datetime, timedelta
+import base64
+from datetime import datetime
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload, MediaIoBaseUpload, MediaIoBaseDownload
 from google.oauth2.credentials import Credentials
@@ -72,12 +71,10 @@ print(json.dumps(rows))
     result = subprocess.run(ssh_cmd, shell=True, capture_output=True, text=True, timeout=30)
     os.unlink(temp_path)
     if result.returncode != 0:
-        print(f"  SSH ERROR: {result.stderr[:200]}")
         return []
     try:
         return json.loads(result.stdout.strip())
     except json.JSONDecodeError:
-        print(f"  JSON ERROR: {result.stdout[:200]}")
         return []
 
 def run_lxc_write(sql):
@@ -99,7 +96,7 @@ conn.close()
     ssh_cmd = f"ssh -i {SSH_KEY} -o StrictHostKeyChecking=no {SSH_USER}@{SSH_HOST} 'python3 {remote_path} && rm {remote_path}'"
     result = subprocess.run(ssh_cmd, shell=True, capture_output=True, text=True, timeout=30)
     os.unlink(temp_path)
-    return result.returncode == 0 and 'OK' in result.stdout
+    return result.stdout.strip()
 
 def ensure_schema():
     columns = ['status', 'sent_date', 'signed_date', 'reminder_count']
@@ -111,31 +108,37 @@ def ensure_schema():
             run_lxc_write(f"ALTER TABLE waived_documents ADD COLUMN {col} {dtype}")
             print(f"  Created column: waived_documents.{col}")
 
-def parse_pdf_filename(filename):
-    """Extract base doc name from PDF filename.
+def parse_doc_name_from_subject(subject):
+    """Extract document name from Gmail subject.
     
-    PDF filenames have timestamp suffix: 'Waiver_Name_20260804 - 8/3/26, 1:36 PM'
-    We strip the timestamp to get the base: 'Waiver_Name_20260804'
+    Formats:
+    - eSignature request for "Waiver_Name_20260804 - 8/3/26, 8:29 PM"
+    - eSigned Document Ready: "Waiver_Name_20260804 - 8/3/26, 8:29 PM"
+    Returns: "Waiver_Name_20260804"
     """
-    # Strip timestamp: " - M/D/YY, H:MM AM/PM" or " - M/D/YY, H:MM:SS AM/PM"
-    return re.sub(r' - \d+/\d+/\d+,\s*\d+:\d+(?::\d+)?\s*[AP]M$', '', filename)
+    # Extract quoted document name (handles both formats)
+    match = re.search(r'"([^"]+)"', subject)
+    if match:
+        doc_name_with_ts = match.group(1)
+        # Strip timestamp suffix: " - M/D/YY, H:MM AM/PM"
+        base_name = re.sub(r' - \d+/\d+/\d+,\s*\d+:\d+(?::\d+)?\s*[AP]M$', '', doc_name_with_ts)
+        return base_name
+    return None
 
-def find_athlete_by_doc_name(doc_name, db_records):
-    """Match a doc name to a DB record by extracting athlete name.
+def find_athlete_by_doc_name(doc_name, athletes):
+    """Match doc name to athlete in DB.
     
-    Doc names are formatted: Waiver_FirstLast_YYYYMMDD
-    We match FirstLast to athlete first_name + last_name
+    Doc names: Waiver_FirstLast_YYYYMMDD
     """
-    # Extract athlete name from doc name
     match = re.match(r'Waiver_(.+)_(\d{8})', doc_name)
     if not match:
         return None
     
     athlete_part = match.group(1)
-    parts = athlete_part.rsplit('_', 1)  # Split from right: ['First', 'Last']
+    parts = athlete_part.rsplit('_', 1)
     if len(parts) == 2:
         first_name, last_name = parts
-        for rec in db_records:
+        for rec in athletes:
             if rec['first_name'].lower() == first_name.lower() and rec['last_name'].lower() == last_name.lower():
                 return rec
     return None
@@ -189,12 +192,46 @@ def send_new_waivers(drive):
     return sent_count
 
 # ──────────────────────────────────────────────
-# PHASE 2: DETECT COMPLETED WAIVERS (DRIVE-BASED)
+# PHASE 2: DETECT COMPLETED WAIVERS (GMAIL-BASED)
 # ──────────────────────────────────────────────
 
-def process_completed_drives(drive):
-    """Detect completed waivers by scanning Pending folder for PDFs with timestamps."""
-    print("\n=== PHASE 2: DETECTING COMPLETED WAIVERS ===")
+def parse_email_body(msg_data):
+    """Extract text/plain body from Gmail message."""
+    def get_body_text(payload):
+        """Recursively find text/plain body."""
+        if 'parts' not in payload:
+            return None
+        
+        for part in payload['parts']:
+            mime = part.get('mimeType', '')
+            if mime == 'text/plain':
+                body_data = part.get('body', {}).get('data', '')
+                if body_data:
+                    return base64.urlsafe_b64decode(body_data).decode('utf-8')
+            if 'parts' in part:
+                result = get_body_text(part)
+                if result:
+                    return result
+        return None
+    
+    return get_body_text(msg_data['payload'])
+
+def process_completed_gmail(gmail, drive):
+    """Detect completed waivers by scanning Gmail for eSignature completion emails."""
+    print("\n=== PHASE 2: DETECTING COMPLETED WAIVERS (GMAIL) ===")
+    
+    # Search for eSignature emails from the system (all labels)
+    results = gmail.users().messages().list(
+        userId='me',
+        q='from:esignature-noreply@google.com'
+    ).execute()
+    
+    messages = results.get('messages', [])
+    print(f"  Found {len(messages)} completion emails in inbox")
+    
+    if not messages:
+        print("  No new completions found.")
+        return 0
     
     # Get all pending athletes from DB
     athletes = deploy_and_run_lxc_script("""
@@ -205,57 +242,70 @@ def process_completed_drives(drive):
         WHERE wd.status = 'pending'
     """)
     
-    if not athletes:
-        print("  No pending waivers found in DB.")
-        return 0
+    athlete_map = {f"{a['first_name']} {a['last_name']}": a for a in athletes}
     
-    # Get athlete lookup (id -> first_last)
-    athlete_map = {}
-    for a in athletes:
-        athlete_map[a['id']] = f"{a['first_name']}_{a['last_name']}"
-    
-    # Scan Pending folder for PDFs with timestamp suffix (completed = PDF created)
-    pending_results = drive.files().list(
-        q=f"'{PENDING_FOLDER_ID}' in parents and mimeType = 'application/pdf' and trashed = false",
-        fields='files(id, name, modifiedTime)'
-    ).execute()
-    
-    pdf_files = pending_results.get('files', [])
-    print(f"  Found {len(pdf_files)} PDF(s) in Pending folder")
-    
-    # Track which athlete IDs we've already processed (avoid double-processing)
-    processed_athlete_ids = set()
     completed_count = 0
     
-    for pdf in pdf_files:
-        pdf_name = pdf['name']
+    for msg in messages:
+        # Fetch full message
+        msg_data = gmail.users().messages().get(
+            userId='me',
+            id=msg['id'],
+            format='metadata',
+            metadataHeaders=['Subject', 'From', 'Date']
+        ).execute()
         
-        # Check if this PDF looks like a completed waiver (has timestamp suffix)
-        match = re.search(r' - \d+/\d+/\d+,\s*\d+:\d+(?::\d+)?\s*[AP]M$', pdf_name)
-        if not match:
-            print(f"  Skipping non-completion PDF: {pdf_name}")
+        headers = {h['name']: h['value'] for h in msg_data['payload']['headers']}
+        subject = headers.get('Subject', '')
+        
+        # Extract document name from subject
+        doc_name = parse_doc_name_from_subject(subject)
+        if not doc_name:
+            print(f"  WARNING: Could not parse document name from: {subject}")
             continue
         
-        # Extract base doc name
-        base_doc_name = parse_pdf_filename(pdf_name)
-        print(f"\n  Found completed: {pdf_name}")
-        print(f"    Base name: {base_doc_name}")
+        print(f"\n  Found completion: {subject}")
+        print(f"    Parsed doc name: {doc_name}")
         
-        # Find matching athlete in DB
-        athlete = find_athlete_by_doc_name(base_doc_name, athletes)
+        # Find matching athlete
+        athlete = find_athlete_by_doc_name(doc_name, athletes)
         if not athlete:
-            print(f"  WARNING: No matching athlete found for {base_doc_name}")
+            print(f"  WARNING: No matching athlete found for {doc_name}")
             continue
         
         athlete_id = athlete['id']
         print(f"    Athlete ID: {athlete_id}")
         
-        # Skip if already processed
-        if athlete_id in processed_athlete_ids:
-            print(f"    Already processed, skipping")
+        # Get full body to verify completion
+        full_msg = gmail.users().messages().get(
+            userId='me',
+            id=msg['id'],
+            format='full'
+        ).execute()
+        
+        body = parse_email_body(full_msg)
+        if body and 'completed' in body.lower():
+            print(f"    Email body confirms: COMPLETED")
+        else:
+            print(f"    WARNING: Could not verify completion in body")
             continue
         
-        # Move PDF to Completed folder
+        # Find the PDF in Pending folder (Google creates it after signing)
+        # List all PDFs in Pending and find the matching one
+        pending_pdfs = drive.files().list(
+            q=f"'{PENDING_FOLDER_ID}' in parents and mimeType='application/pdf' and trashed=false",
+            fields='files(id, name)'
+        ).execute()
+        
+        pdf_files = [f for f in pending_pdfs.get('files', []) if doc_name in f['name']]
+        if not pdf_files:
+            print(f"  WARNING: No PDF found in Pending for {doc_name}")
+            continue
+        
+        pdf = pdf_files[0]
+        print(f"    PDF found: {pdf['name']}")
+        
+        # Move PDF to Completed
         drive.files().update(
             fileId=pdf['id'],
             addParents=COMPLETED_FOLDER_ID,
@@ -263,13 +313,13 @@ def process_completed_drives(drive):
         ).execute()
         print(f"    Moved PDF to Completed folder")
         
-        # Delete the Google Doc from Pending or Completed
-        google_doc_results = drive.files().list(
-            q=f"(\'{PENDING_FOLDER_ID}\' in parents OR \'{COMPLETED_FOLDER_ID}\' in parents) and name = \'{base_doc_name}\' and mimeType contains \'google-apps.document\' and trashed = false",
+        # Delete the Google Doc from Pending
+        google_doc = drive.files().list(
+            q=f"'{PENDING_FOLDER_ID}' in parents and name = '{doc_name}' and mimeType contains 'google-apps.document'",
             fields='files(id, name)'
         ).execute()
         
-        for gd in google_doc_results.get('files', []):
+        for gd in google_doc.get('files', []):
             drive.files().delete(fileId=gd['id']).execute()
             print(f"    Deleted Google Doc: {gd['name']}")
         
@@ -283,7 +333,14 @@ def process_completed_drives(drive):
         """)
         print(f"    DB UPDATED: status=completed, signed_date={datetime.now().strftime('%Y-%m-%d')}, PDF_id={pdf['id']}")
         
-        processed_athlete_ids.add(athlete_id)
+        # Archive email
+        gmail.users().messages().modify(
+            userId='me',
+            id=msg['id'],
+            body={'removeLabelIds': ['INBOX'], 'addLabelIds': [ARCHIVE_LABEL]}
+        ).execute()
+        print(f"    Email archived to Waiver-Done")
+        
         completed_count += 1
     
     print(f"\n  Total completed waivers processed: {completed_count}")
@@ -349,11 +406,12 @@ def main():
     try:
         creds = get_credentials()
         drive = build('drive', 'v3', credentials=creds)
+        gmail_api = build('gmail', 'v1', credentials=creds)
         
         ensure_schema()
         
         send_new_waivers(drive)
-        process_completed_drives(drive)
+        process_completed_gmail(gmail_api, drive)
         generate_status_report()
         
         print("\n" + "=" * 60)
