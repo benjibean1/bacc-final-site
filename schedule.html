@@ -149,22 +149,141 @@
         <!-- Upcoming Competitions -->
         <div style="margin-top: 3rem;">
           <h2 style="color: var(--primary-blue); margin-bottom: 1rem;">Upcoming Competitions</h2>
-          <div class="schedule-table-wrapper">
-            <table class="schedule-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Competition</th>
-                  <th>Location</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>November 21, 2026</td><td><strong>SCTP Fun Shoot</strong></td><td>Ben Avery Clay Target Center</td></tr>
-                <tr><td>January 16–17, 2027</td><td><strong>SCTP International Regional Competition</strong></td><td>Tucson Trap and Skeet Club</td></tr>
-                <tr><td>April 24–25, 2027</td><td><strong>SCTP Commissioner's Cup Competition</strong></td><td>Ben Avery Clay Target Center</td></tr>
-              </tbody>
-            </table>
+
+          <!-- SCTP Team Competitions (highlighted) -->
+          <div style="margin-bottom: 2.5rem;">
+            <h3 style="color: var(--accent-orange); margin-bottom: 0.75rem;">&#9733; Ben Avery Clay Crushers — Team Events</h3>
+            <div class="schedule-table-wrapper">
+              <table class="schedule-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Competition</th>
+                    <th>Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="schedule-highlight"><td>November 21, 2026</td><td><strong>SCTP Fun Shoot</strong></td><td>Ben Avery Clay Target Center</td></tr>
+                  <tr class="schedule-highlight"><td>January 16–17, 2027</td><td><strong>SCTP International Regional Competition</strong></td><td>Tucson Trap and Skeet Club</td></tr>
+                  <tr class="schedule-highlight"><td>April 24–25, 2027</td><td><strong>SCTP Commissioner's Cup Competition</strong></td><td>Ben Avery Clay Target Center</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+
+          <!-- ATA Trap Competitions -->
+          <div class="competition-section">
+            <div class="competition-header" onclick="toggleAccordion(this)">
+              <span>Trap Competitions <span class="event-count">(55 events)</span></span>
+              <span class="arrow">&#9660;</span>
+            </div>
+            <div class="competition-body">
+              <table class="schedule-table">
+                <thead>
+                  <tr>
+                    <th>Date Range</th>
+                    <th>Competition</th>
+                    <th>Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Sep 6–7, 2026</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Sep 13, 2026</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Sep 20–21, 2026</td><td>Ben Avery</td><td>Ben Avery</td></tr>
+                  <tr><td>Sep 27, 2026</td><td>Precott B50</td><td>Precott</td></tr>
+                  <tr><td>Oct 4–5, 2026</td><td>Pre-Autumn Grand</td><td>Pre-Autumn Grand</td></tr>
+                  <tr><td>Oct 11–12, 2026</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Oct 18–19, 2026</td><td>Precott B50</td><td>Precott</td></tr>
+                  <tr><td>Oct 25–26, 2026</td><td>Tri State B50</td><td>Tri State</td></tr>
+                  <tr><td>Nov 1–2, 2026</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Nov 8–9, 2026</td><td>Autumn Grand</td><td>Autumn Grand</td></tr>
+                  <tr><td>Nov 15–16, 2026</td><td>Double Header</td><td>Double Header</td></tr>
+                  <tr><td>Nov 22–23, 2026</td><td>Tri State B50</td><td>Tri State</td></tr>
+                  <tr><td>Nov 29–30, 2026</td><td>Havasu B50</td><td>Havasu</td></tr>
+                  <tr><td>Dec 6–7, 2026</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Dec 13–14, 2026</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Dec 20–21, 2026</td><td>Ben Avery</td><td>Ben Avery</td></tr>
+                  <tr><td>Dec 27–28, 2026</td><td>Havasu B50</td><td>Havasu</td></tr>
+                  <tr><td>Jan 3–4, 2027</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Jan 10–11, 2027</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Jan 17–18, 2027</td><td>Double Header</td><td>Double Header</td></tr>
+                  <tr><td>Jan 24–25, 2027</td><td>Tri State B50</td><td>Tri State</td></tr>
+                  <tr><td>Jan 31, 2027</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Feb 7–8, 2027</td><td>Ben Avery</td><td>Ben Avery</td></tr>
+                  <tr><td>Feb 14–15, 2027</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Feb 21–22, 2027</td><td>Tri State B50</td><td>Tri State</td></tr>
+                  <tr><td>Feb 28, 2027</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Mar 7–8, 2027</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Mar 14–15, 2027</td><td>Tri State B50</td><td>Tri State</td></tr>
+                  <tr><td>Mar 21–22, 2027</td><td>Spring Grand</td><td>Spring Grand</td></tr>
+                  <tr><td>Mar 28–29, 2027</td><td>Double Header</td><td>Double Header</td></tr>
+                  <tr><td>Apr 4–5, 2027</td><td>Tri State B50</td><td>Tri State</td></tr>
+                  <tr><td>Apr 11–12, 2027</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Apr 18–19, 2027</td><td>Ben Avery</td><td>Ben Avery</td></tr>
+                  <tr><td>Apr 25–26, 2027</td><td>Precott B50</td><td>Precott</td></tr>
+                  <tr><td>May 2–3, 2027</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>May 9–10, 2027</td><td>Precott B50</td><td>Precott</td></tr>
+                  <tr><td>May 16–17, 2027</td><td>Ben Avery</td><td>Ben Avery</td></tr>
+                  <tr><td>May 23–24, 2027</td><td>Tri State B50</td><td>Tri State</td></tr>
+                  <tr><td>May 30–31, 2027</td><td>Precott B50</td><td>Precott</td></tr>
+                  <tr><td>Jun 6–7, 2027</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Jun 13–14, 2027</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Jun 20–21, 2027</td><td>Ben Avery</td><td>Ben Avery</td></tr>
+                  <tr><td>Jun 27–28, 2027</td><td>Precott B50</td><td>Precott</td></tr>
+                  <tr><td>Jul 4–5, 2027</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Jul 11–12, 2027</td><td>Gun Flagstaff</td><td>Flagstaff</td></tr>
+                  <tr><td>Jul 18–19, 2027</td><td>Western Zone</td><td>Western Zone</td></tr>
+                  <tr><td>Jul 25–26, 2027</td><td>TBD</td><td>TBD</td></tr>
+                  <tr><td>Aug 1–2, 2027</td><td>Casa Grande</td><td>Casa Grande</td></tr>
+                  <tr><td>Aug 8–9, 2027</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Aug 15–16, 2027</td><td>Precott B50</td><td>Precott</td></tr>
+                  <tr><td>Aug 22–23, 2027</td><td>Tucson</td><td>Tucson</td></tr>
+                  <tr><td>Aug 29–30, 2027</td><td>Precott B50</td><td>Precott</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Skeet Association Competitions -->
+          <div class="competition-section">
+            <div class="competition-header" onclick="toggleAccordion(this)">
+              <span>Skeet Competitions <span class="event-count">(19 events)</span></span>
+              <span class="arrow">&#9660;</span>
+            </div>
+            <div class="competition-body">
+              <table class="schedule-table">
+                <thead>
+                  <tr>
+                    <th>Date Range</th>
+                    <th>Competition</th>
+                    <th>Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Jan 2–3, 2027</td><td>Stage Coach Open (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                  <tr><td>Jan 22–24, 2027</td><td>CBA Season Opener (Ben Avery)</td><td>Ben Avery</td></tr>
+                  <tr><td>Jan 30–31, 2027</td><td>Iron City Open (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                  <tr><td>Feb 6–7, 2027</td><td>Buffalo Soldier (Cochise GC / Tucson T&S)</td><td>Cochise GC / Tucson T&S</td></tr>
+                  <tr><td>Feb 24–26, 2027</td><td>Mid Week Copper State Open (Ben Avery)</td><td>Ben Avery</td></tr>
+                  <tr><td>Feb 27–28, 2027</td><td>Main Event Copper State Open (Ben Avery)</td><td>Ben Avery</td></tr>
+                  <tr><td>Mar 3–5, 2027</td><td>51st Old Pueblo Mid-Week (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                  <tr><td>Mar 6–7, 2027</td><td>50th Old Pueblo Main (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                  <tr><td>Mar 12–14, 2027</td><td>Art's 13th Annual Pueblo Chili Open (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                  <tr><td>Apr 9–11, 2027</td><td>Arizona State Shoot Open (Ben Avery)</td><td>Ben Avery</td></tr>
+                  <tr><td>Apr 24, 2027</td><td>Spring into Summer Skeet Open (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                  <tr><td>May 8, 2027</td><td>Club Championship (Ben Avery)</td><td>Ben Avery</td></tr>
+                  <tr><td>May 15–16, 2027</td><td>Gunslinger Open (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                  <tr><td>Jun 5, 2027</td><td>Hot Tamale Open (Ben Avery)</td><td>Ben Avery</td></tr>
+                  <tr><td>Jun 12–13, 2027</td><td>High Desert Open (Cochise Gun Club)</td><td>Cochise Gun Club</td></tr>
+                  <tr><td>Jun 26, 2027</td><td>Pure Heat Open (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                  <tr><td>Jul 10, 2027</td><td>Muy Caliente Open (Ben Avery)</td><td>Ben Avery</td></tr>
+                  <tr><td>Jul 17–18, 2027</td><td>Summertime Open (Cochise Gun Club)</td><td>Cochise Gun Club</td></tr>
+                  <tr><td>Jul 24, 2027</td><td>Wet and Wild Open (Tucson T&S)</td><td>Tucson T&S</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -219,6 +338,14 @@
     hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
     navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
     document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+    function toggleAccordion(header) {
+      header.classList.toggle('active');
+      const body = header.nextElementSibling;
+      body.classList.toggle('open');
+    }
   </script>
 
 </body>

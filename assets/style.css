@@ -622,6 +622,77 @@ h1, h2, h3, h4, h5, h6 {
   font-style: italic;
 }
 
+/* ===== Competition Accordion ===== */
+.competition-section {
+  margin-bottom: 1.25rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.competition-header {
+  background: var(--primary-blue);
+  color: var(--white);
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.competition-header:hover {
+  background: #15305a;
+}
+
+.competition-header .arrow {
+  transition: transform 0.3s;
+  font-size: 1.25rem;
+}
+
+.competition-header.active .arrow {
+  transform: rotate(180deg);
+}
+
+.competition-header .event-count {
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.75;
+  margin-left: 0.75rem;
+}
+
+.competition-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  background: var(--white);
+}
+
+.competition-body.open {
+  max-height: 4000px;
+}
+
+.competition-body .schedule-table {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.competition-body .schedule-table tbody tr:nth-child(odd) {
+  background: #fafbfc;
+}
+
+.schedule-highlight {
+  background-color: #fff4eb !important;
+}
+
+.schedule-highlight td {
+  font-weight: 600;
+}
+
 /* ===== Contact Page ===== */
 .contact-grid {
   display: grid;
