@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration — Ben Avery Clay Crushers</title>
+  <meta name="description" content="Register for the 2026-2027 season. Complete the form below to join the Ben Avery Clay Crushers youth shooting sports team in Phoenix, AZ.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Registration — Ben Avery Clay Crushers">
+  <meta property="og:description" content="Register for the 2026-2027 season. Complete the form below to join the Ben Avery Clay Crushers youth shooting sports team in Phoenix, AZ.">
+  <meta property="og:image" content="https://benaveryclaycrushers.org/assets/Herobanner2.png">
+  <meta property="og:url" content="https://benaveryclaycrushers.org/registration.html">
+  <meta property="og:site_name" content="Ben Avery Clay Crushers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Registration — Ben Avery Clay Crushers">
+  <meta name="twitter:description" content="Register for the 2026-2027 season. Complete the form below to join the Ben Avery Clay Crushers youth shooting sports team in Phoenix, AZ.">
+  <meta name="twitter:image" content="https://benaveryclaycrushers.org/assets/Herobanner2.png">
+  <link rel="canonical" href="https://benaveryclaycrushers.org/registration.html">
+  <link rel="stylesheet" href="assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SportsClub",
+    "name": "Ben Avery Clay Crushers",
+    "description": "Register for the 2026-2027 season. Join the Ben Avery Clay Crushers youth shooting sports team in Phoenix, AZ.",
+    "url": "https://benaveryclaycrushers.org/registration.html",
+    "email": "info@benaveryclaycrushers.org",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Ben Avery Clay Target Center",
+      "addressLocality": "Phoenix",
+      "addressRegion": "AZ",
+      "addressCountry": "US"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">
+        <img src="assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="registration.html" class="active">Register</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="registration.html" class="navbar-cta">Join the Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section style="background: var(--primary-blue); color: var(--white); padding: 4rem 0 3rem; text-align: center;">
+    <div class="container">
+      <h1 style="font-size: 2.75rem;">Registration</h1>
+      <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0.75rem auto 0;">2026–2027 Season Registration</p>
+    </div>
+  </section>
+
+  <!-- Registration Form -->
+  <section>
+    <div class="registration-container">
+      <div class="registration-header">
+        <h2 style="font-size: 1.75rem; color: var(--primary-blue);">Athlete Registration</h2>
+        <p>Complete all required fields to submit your registration. We'll review and contact you with next steps.</p>
+      </div>
+
+      <div id="form-message" class="form-message"></div>
+
+      <form id="registration-form">
+
+        <!-- Athlete Info -->
+        <div class="form-section">
+          <h3>Athlete Information</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>New or Returning Athlete? <span class="required">*</span></label>
+              <select name="athlete_type" required>
+                <option value="">Select...</option>
+                <option value="New">New</option>
+                <option value="Returning">Returning</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Gender <span class="required">*</span></label>
+              <select name="gender" required>
+                <option value="">Select...</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" name="first_name" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" name="last_name" required>
+            </div>
+            <div class="form-group full-width">
+              <label>Address <span class="required">*</span></label>
+              <input type="text" name="address" required>
+            </div>
+            <div class="form-group">
+              <label>City <span class="required">*</span></label>
+              <input type="text" name="city" required>
+            </div>
+            <div class="form-group">
+              <label>ZIP Code <span class="required">*</span></label>
+              <input type="text" name="zip" required pattern="[0-9]{5}" placeholder="12345">
+            </div>
+            <div class="form-group">
+              <label>Cell Phone</label>
+              <input type="tel" name="cell_phone" placeholder="(555) 555-5555">
+            </div>
+            <div class="form-group">
+              <label>Current Grade <span class="required">*</span></label>
+              <select name="grade" required>
+                <option value="">Select...</option>
+                <option value="4">4th Grade</option>
+                <option value="5">5th Grade</option>
+                <option value="6">6th Grade</option>
+                <option value="7">7th Grade</option>
+                <option value="8">8th Grade</option>
+                <option value="9">9th Grade</option>
+                <option value="10">10th Grade</option>
+                <option value="11">11th Grade</option>
+                <option value="12">12th Grade</option>
+                <option value="College">College</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>School Name <span class="required">*</span></label>
+              <input type="text" name="school" required>
+            </div>
+            <div class="form-group">
+              <label>Graduation Year <span class="required">*</span></label>
+              <input type="text" name="graduation_year" placeholder="e.g., 2028" required>
+            </div>
+            <div class="form-group">
+              <label>Date of Birth <span class="required">*</span></label>
+              <input type="text" name="date_of_birth" placeholder="MM/DD/YYYY" required pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/[0-9]{4}" title="Please enter a valid date in MM/DD/YYYY format (e.g., 01/15/2010)">
+            </div>
+            <div class="form-group">
+              <label>Shirt Size <span class="required">*</span></label>
+              <select name="shirt_size" required>
+                <option value="">Select...</option>
+                <option value="YS">Youth Small</option>
+                <option value="YM">Youth Medium</option>
+                <option value="YL">Youth Large</option>
+                <option value="YXL">Youth XL</option>
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">XL</option>
+                <option value="2XL">2XL</option>
+                <option value="3XL">3XL</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ammunition Gauge <span class="required">*</span></label>
+              <select name="ammunition" required>
+                <option value="">Select...</option>
+                <option value="12GA">12 Gauge</option>
+                <option value="20GA">20 Gauge</option>
+                <option value="Unknown">Not Sure Yet</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label>Practice Day <span class="required">*</span></label>
+              <select name="practice_day" required>
+                <option value="">Select...</option>
+                <option value="Sunday">Sunday Only ($550 New / $500 Returning)</option>
+                <option value="Tuesday">Tuesday Only ($550 New / $500 Returning)</option>
+                <option value="Both">Both Days ($1,050 New / $1,000 Returning)</option>
+              </select>
+            </div>
+            <div class="form-group full-width" id="replacement-vest-group" style="display: none;">
+              <label>Replacement Vest ($50) <span class="required">*</span></label>
+              <select name="replacement_vest">
+                <option value="">Select...</option>
+                <option value="Yes">Yes, I need a replacement vest</option>
+                <option value="No">No, I have my own vest</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parent/Guardian Information -->
+        <div class="form-section">
+          <h3>Parent/Guardian Information</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Parent/Guardian 1 First Name <span class="required">*</span></label>
+              <input type="text" name="guardian1_first" required>
+            </div>
+            <div class="form-group">
+              <label>Parent/Guardian 1 Last Name <span class="required">*</span></label>
+              <input type="text" name="guardian1_last" required>
+            </div>
+            <div class="form-group">
+              <label>Parent/Guardian 1 Email <span class="required">*</span></label>
+              <input type="email" name="guardian1_email" required>
+            </div>
+            <div class="form-group">
+              <label>Parent/Guardian 1 Cell Phone <span class="required">*</span></label>
+              <input type="tel" name="guardian1_cell" required>
+            </div>
+            <div class="form-group">
+              <label>Parent/Guardian 2 First Name</label>
+              <input type="text" name="guardian2_first">
+            </div>
+            <div class="form-group">
+              <label>Parent/Guardian 2 Last Name</label>
+              <input type="text" name="guardian2_last">
+            </div>
+            <div class="form-group">
+              <label>Parent/Guardian 2 Email</label>
+              <input type="email" name="guardian2_email">
+            </div>
+            <div class="form-group">
+              <label>Parent/Guardian 2 Cell Phone</label>
+              <input type="tel" name="guardian2_cell">
+            </div>
+          </div>
+        </div>
+
+        <!-- Membership Information -->
+        <div class="form-section">
+          <h3>Membership (Optional)</h3>
+          <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Are you a member of any of these organizations? (Helps us track team memberships for registered competitions)</p>
+          <div class="form-group full-width">
+            <label style="margin-bottom: 0.5rem;">Select all that apply:</label>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>ATA Member</label>
+              <input type="text" name="ata_member" placeholder="e.g., 12345">
+            </div>
+            <div class="form-group">
+              <label>NSSA Member</label>
+              <input type="text" name="nssa_member" placeholder="e.g., 12345">
+            </div>
+            <div class="form-group">
+              <label>NSCA Member</label>
+              <input type="text" name="nsca_member" placeholder="e.g., 12345">
+            </div>
+            <div class="form-group">
+              <label>ASTA Member</label>
+              <input type="text" name="asta_member" placeholder="e.g., 12345">
+            </div>
+            <div class="form-group">
+              <label>ASSA Member</label>
+              <input type="text" name="assa_member" placeholder="e.g., 12345">
+            </div>
+            <div class="form-group">
+              <label>USAS Member</label>
+              <input type="text" name="usas_member" placeholder="e.g., 12345">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-section">
+          <button type="submit" class="btn btn-primary" id="submit-btn">Submit Registration</button>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">You will receive a confirmation email once your registration is processed.</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Payment link will be emailed once registration information is processed.</p>
+        </div>
+
+        <!-- Photo/Video Consent -->
+        <div class="consent-box">
+          <p class="consent-label">By registering this athlete, you agree to the following:</p>
+          <p style="font-size: 0.85rem;">Ben Avery Clay Crushers (BACC) reserves the right to use any photograph/video taken at any Scholastic Clay Target Program (SCTP/SSSF) event, without the expressed written permission of those included within the photograph/video. BACC may use the photograph/video in publications or other media material produced, used or contracted by BACC including but not limited to: brochures, invitations, books, newspapers, magazines, television, websites, etc.</p>
+          <p style="font-size: 0.85rem;">To ensure the privacy of individuals and children, images will not be identified using full names or personal identifying information without written approval from the photographed subject, parent or legal guardian.</p>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Clay Crushers Logo">
+          <p>Developing young shooters with a commitment to safety, sportsmanship, and excellence at the Ben Avery Clay Target Center in Phoenix, AZ.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="registration.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></li>
+            <li>Ben Avery Clay Target Center</li>
+            <li>Phoenix, Arizona</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> Ben Avery Clay Crushers. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // API Configuration - this will be updated when the tunnel is live
+    const API_URL = 'https://api.benaveryclaycrushers.org';
+
+    // Mobile nav toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Show/hide replacement vest based on athlete type
+    document.querySelector('select[name="athlete_type"]').addEventListener('change', function() {
+      const vestGroup = document.getElementById('replacement-vest-group');
+      if (this.value === 'Returning') {
+        vestGroup.style.display = 'block';
+        vestGroup.querySelector('select').required = true;
+      } else {
+        vestGroup.style.display = 'none';
+        vestGroup.querySelector('select').required = false;
+        vestGroup.querySelector('select').value = '';
+      }
+    });
+
+    // Form submission
+    const form = document.getElementById('registration-form');
+    const formMessage = document.getElementById('form-message');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Validate required fields are filled
+      const requiredFields = form.querySelectorAll('[required]');
+      let hasEmpty = false;
+      for (const field of requiredFields) {
+        if (!field.value.trim()) {
+          field.style.borderColor = 'var(--accent-orange)';
+          hasEmpty = true;
+        } else {
+          field.style.borderColor = '';
+        }
+      }
+
+      if (hasEmpty) {
+        showFormMessage('Please fill in all required fields marked with an asterisk.', 'error');
+        return;
+      }
+
+      // Validate date format matches expected pattern
+      const dobInput = form.querySelector('input[name="date_of_birth"]');
+      if (dobInput && dobInput.value) {
+        const dobPattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/[0-9]{4}$/;
+        if (!dobPattern.test(dobInput.value.trim())) {
+          showFormMessage('Invalid date of birth format. Please use MM/DD/YYYY (e.g., 01/15/2010).', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Registration';
+          return;
+        }
+      }
+
+      // Build the data object
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        if (value.trim()) {
+          data[key] = value.trim();
+        }
+      });
+
+      // Convert field names to match backend API expectations
+      // practice_day → practice_days with value mapping
+      if (data.practice_day) {
+        const practiceMap = { 'Sunday': 'sunday', 'Tuesday': 'tuesday', 'Both': 'sunday_tuesday' };
+        data.practice_days = practiceMap[data.practice_day] || data.practice_day.toLowerCase();
+        delete data.practice_day;
+      }
+      // athlete_type must be lowercase for the API
+      if (data.athlete_type) {
+        data.athlete_type = data.athlete_type.toLowerCase();
+      }
+      // cell_phone → phone for the API
+      if (data.cell_phone) {
+        data.phone = data.cell_phone;
+        delete data.cell_phone;
+      }
+      // Build nested guardian object from flat form fields
+      if (data.guardian1_first) {
+        data.guardian = {
+          first_name: data.guardian1_first,
+          last_name: data.guardian1_last,
+          email: data.guardian1_email,
+          phone: data.guardian1_cell,
+          relationship: 'Parent',
+        };
+        delete data.guardian1_first;
+        delete data.guardian1_last;
+        delete data.guardian1_email;
+        delete data.guardian1_cell;
+      }
+      // Build replacement_vest add-on from flat form field
+      if (data.replacement_vest) {
+        data.add_ons = {
+          replacement_vest: data.replacement_vest === 'Yes',
+        };
+        delete data.replacement_vest;
+      }
+
+      // Convert date_of_birth from MM/DD/YYYY to YYYY-MM-DD for the API
+      if (data.date_of_birth) {
+        const dobMatch = data.date_of_birth.match(/^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/([0-9]{4})$/);
+        if (!dobMatch) {
+          showFormMessage('Invalid date of birth format. Please use MM/DD/YYYY (e.g., 01/15/2010).', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Registration';
+          return;
+        }
+        data.date_of_birth = `${dobMatch[3]}-${dobMatch[1]}-${dobMatch[2]}`;
+      }
+
+      // Set disabled state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const response = await fetch(`${API_URL}/api/athletes`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.athlete_id) {
+          // Redirect to success page with registration summary (no PII)
+          const practiceLabel = data.practice_day ? data.practice_day : '';
+          const url = `regsuccess.html?athlete_name=${encodeURIComponent(result.registration.first_name + ' ' + result.registration.last_name)}&division=${encodeURIComponent(result.registration.division || '')}&grade=${encodeURIComponent(result.registration.grade || '')}&practice_days=${encodeURIComponent(result.registration.practice_days || '')}&total_fee=${encodeURIComponent(result.registration.total_fee || '')}&athlete_id=${result.athlete_id}&payment_url=${encodeURIComponent(result.registration.payment_url || '')}`;
+          window.location.href = url;
+          return;
+        } else {
+          showFormMessage(result.error || 'Registration failed. Please try again.', 'error');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        showFormMessage('Network error. Please check your connection and try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Registration';
+      }
+    });
+
+    function showFormMessage(message, type) {
+      formMessage.innerHTML = message;
+      formMessage.className = `form-message ${type}`;
+      // Scroll to message
+      formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Auto-hide success messages after 10 seconds
+      if (type === 'success') {
+        setTimeout(() => {
+          formMessage.style.display = 'none';
+        }, 10000);
+      }
+    }
+  </script>
+
+</body>
+</html>
