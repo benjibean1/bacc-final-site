@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Ben Avery Clay Crushers</title>
+  <meta name="description" content="Photos from practice, competitions, and team events with the Ben Avery Clay Crushers.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gallery — Ben Avery Clay Crushers">
+  <meta property="og:description" content="Photos from practice, competitions, and team events with the Ben Avery Clay Crushers.">
+  <meta property="og:image" content="https://res.cloudinary.com/dilrhyws/image/upload/w_1200,f_auto,q_auto/assets/gallery-cover.jpg">
+  <meta property="og:url" content="https://benaveryclaycrushers.org/gallery.html">
+  <meta property="og:site_name" content="Ben Avery Clay Crushers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gallery — Ben Avery Clay Crushers">
+  <meta name="twitter:description" content="Photos from practice, competitions, and team events with the Ben Avery Clay Crushers.">
+  <link rel="canonical" href="https://benaveryclaycrushers.org/gallery.html">
+  <link rel="stylesheet" href="assets/style.css">
+  <!-- Lightbox CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">
+        <img src="assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="registration.html">Register</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="registration.html" class="navbar-cta">Join the Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section style="background: var(--primary-blue); color: var(--white); padding: 4rem 0 3rem; text-align: center;">
+    <div class="container">
+      <h1 style="font-size: 2.75rem;">Team Gallery</h1>
+      <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0.75rem auto 0;">Moments from practice, competitions, and team life</p>
+    </div>
+  </section>
+
+  <!-- Gallery Sections -->
+  <section class="section">
+    <div class="container" style="max-width: 1100px;">
+
+      <!-- General -->
+      <div class="gallery-section" style="margin-bottom: 4rem;">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">General</h2>
+        <div class="gallery-grid" id="gallery-general"></div>
+      </div>
+
+      <!-- Champions -->
+      <div class="gallery-section" style="margin-bottom: 4rem;">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Champions</h2>
+        <div class="gallery-grid" id="gallery-champions"></div>
+        <p class="empty-gallery" id="empty-champions" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem 0; display: none;">Photos coming soon...</p>
+      </div>
+
+      <!-- Competitions -->
+      <div class="gallery-section" style="margin-bottom: 4rem;">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Competitions</h2>
+        <div class="gallery-grid" id="gallery-competitions"></div>
+        <p class="empty-gallery" id="empty-competitions" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem 0; display: none;">Photos coming soon...</p>
+      </div>
+
+      <!-- Alumni -->
+      <div class="gallery-section" style="margin-bottom: 2rem;">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Alumni</h2>
+        <div class="gallery-grid" id="gallery-alumni"></div>
+        <p class="empty-gallery" id="empty-alumni" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem 0; display: none;">Photos coming soon...</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Want to Join Us?</h2>
+      <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">Registration is open for the upcoming season. Click below to get started.</p>
+      <a href="registration.html" class="btn btn-primary">Register Your Athlete</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Clay Crushers Logo">
+          <p>Developing young shooters with a commitment to safety, sportsmanship, and excellence at the Ben Avery Clay Target Center in Phoenix, AZ.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="registration.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></li>
+            <li>Ben Avery Clay Target Center</li>
+            <li>Phoenix, Arizona</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> Ben Avery Clay Crushers. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox HTML -->
+  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+      <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+      </div>
+      <div class="pswp__ui pswp__ui--hidden">
+        <div class="pswp__top-bar">
+          <div class="pswp__counter"></div>
+          <button class="pswp__button pswp__button--close" aria-label="Close (Esc)"></button>
+          <button class="pswp__button pswp__button--zoom" aria-label="Zoom in/out"></button>
+          <div class="pswp__preloader">
+            <div class="pswp__preloader__icn">
+              <div class="pswp__preloader__cut">
+                <div class="pswp__preloader__donut"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div class="pswp__share-tooltip"></div>
+        </div>
+        <button class="pswp__button pswp__button--arrow--left" aria-label="Previous (arrow left)"></button>
+        <button class="pswp__button pswp__button--arrow--right" aria-label="Next (arrow right)"></button>
+        <div class="pswp__caption">
+          <div class="pswp__caption__center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox JS -->
+  <script type="module">
+    import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js';
+    import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js';
+
+    const cloudName = 'dilrhyws';
+    const folders = ['General', 'Champions', 'Competitions', 'Alumni'];
+
+    async function loadGallery(folder, containerId, emptyId) {
+      const container = document.getElementById(containerId);
+      const emptyEl = document.getElementById(emptyId);
+      if (!container) return;
+
+      try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/list?prefix=${folder}/&type=upload&max_results=100`, {
+          headers: { 'Authorization': 'Basic Mjc1MTUyMjYyODM4MzEyOFlYZVV1bHE0ekM3UzhjOXhhVjBFeTFPZWdCRQ==' }
+        });
+        const data = await res.json();
+
+        if (data.resources && data.resources.length > 0) {
+          data.resources.forEach(r => {
+            const thumbUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_thumb,w_400,f_auto,q_auto/${r.public_id}`;
+            const fullUrl = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${r.public_id}`;
+
+            const a = document.createElement('a');
+            a.href = fullUrl;
+            a.dataset.pswpWidth = r.width;
+            a.dataset.pswpHeight = r.height;
+            a.target = '_blank';
+            a.style.display = 'block';
+
+            const img = document.createElement('img');
+            img.src = thumbUrl;
+            img.alt = r.public_id.replace(/_/g, ' ');
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = 'var(--radius)';
+            img.style.boxShadow = 'var(--shadow-sm)';
+            img.loading = 'lazy';
+
+            a.appendChild(img);
+            container.appendChild(a);
+          });
+          container.style.display = 'grid';
+          if (emptyEl) emptyEl.style.display = 'none';
+        } else {
+          if (container) container.style.display = 'none';
+          if (emptyEl) emptyEl.style.display = 'block';
+        }
+      } catch (e) {
+        console.error(`Failed to load ${folder}:`, e);
+        if (container) container.style.display = 'none';
+        if (emptyEl) emptyEl.style.display = 'block';
+      }
+    }
+
+    // Load all sections
+    const galleryIds = [
+      { folder: 'General', containerId: 'gallery-general', emptyId: null },
+      { folder: 'Champions', containerId: 'gallery-champions', emptyId: 'empty-champions' },
+      { folder: 'Competitions', containerId: 'gallery-competitions', emptyId: 'empty-competitions' },
+      { folder: 'Alumni', containerId: 'gallery-alumni', emptyId: 'empty-alumni' },
+    ];
+
+    galleryIds.forEach(g => loadGallery(g.folder, g.containerId, g.emptyId));
+
+    // Init lightbox
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '.gallery-grid',
+      children: 'a',
+      pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
+    });
+    lightbox.init();
+  </script>
+
+  <script>
+    // Mobile nav
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
