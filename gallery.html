@@ -8,16 +8,46 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Gallery — Ben Avery Clay Crushers">
   <meta property="og:description" content="Photos from practice, competitions, and team events with the Ben Avery Clay Crushers.">
-  <meta property="og:image" content="https://res.cloudinary.com/dilrhyws/image/upload/w_1200,f_auto,q_auto/assets/gallery-cover.jpg">
   <meta property="og:url" content="https://benaveryclaycrushers.org/gallery.html">
   <meta property="og:site_name" content="Ben Avery Clay Crushers">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Gallery — Ben Avery Clay Crushers">
-  <meta name="twitter:description" content="Photos from practice, competitions, and team events with the Ben Avery Clay Crushers.">
   <link rel="canonical" href="https://benaveryclaycrushers.org/gallery.html">
   <link rel="stylesheet" href="assets/style.css">
-  <!-- Lightbox CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
+  <style>
+    .gallery-section {
+      margin-bottom: 4rem;
+    }
+    .gallery-section .empty-msg {
+      text-align: center;
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem 0;
+      font-size: 1.1rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .gallery-grid a {
+      display: block;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+    .gallery-grid a:hover {
+      transform: scale(1.03);
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
@@ -52,37 +82,12 @@
     </div>
   </section>
 
-  <!-- Gallery Sections -->
+  <!-- Gallery Content -->
   <section class="section">
     <div class="container" style="max-width: 1100px;">
-
-      <!-- General -->
-      <div class="gallery-section" style="margin-bottom: 4rem;">
-        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">General</h2>
-        <div class="gallery-grid" id="gallery-general"></div>
+      <div id="gallery-container">
+        <p class="empty-msg" style="font-size: 1.2rem;">Loading photos...</p>
       </div>
-
-      <!-- Champions -->
-      <div class="gallery-section" style="margin-bottom: 4rem;">
-        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Champions</h2>
-        <div class="gallery-grid" id="gallery-champions"></div>
-        <p class="empty-gallery" id="empty-champions" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem 0; display: none;">Photos coming soon...</p>
-      </div>
-
-      <!-- Competitions -->
-      <div class="gallery-section" style="margin-bottom: 4rem;">
-        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Competitions</h2>
-        <div class="gallery-grid" id="gallery-competitions"></div>
-        <p class="empty-gallery" id="empty-competitions" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem 0; display: none;">Photos coming soon...</p>
-      </div>
-
-      <!-- Alumni -->
-      <div class="gallery-section" style="margin-bottom: 2rem;">
-        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Alumni</h2>
-        <div class="gallery-grid" id="gallery-alumni"></div>
-        <p class="empty-gallery" id="empty-alumni" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem 0; display: none;">Photos coming soon...</p>
-      </div>
-
     </div>
   </section>
 
@@ -129,7 +134,7 @@
     </div>
   </footer>
 
-  <!-- Lightbox HTML -->
+  <!-- Lightbox -->
   <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="pswp__bg"></div>
     <div class="pswp__scroll-wrap">
@@ -162,84 +167,76 @@
     </div>
   </div>
 
-  <!-- Lightbox JS -->
+  <!-- Load Photoswipe -->
   <script type="module">
     import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js';
     import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js';
 
     const cloudName = 'dilrhyws';
-    const folders = ['General', 'Champions', 'Competitions', 'Alumni'];
 
-    async function loadGallery(folder, containerId, emptyId) {
-      const container = document.getElementById(containerId);
-      const emptyEl = document.getElementById(emptyId);
-      if (!container) return;
+    // Fetch all photos from Cloudinary root
+    async function loadPhotos() {
+      const container = document.getElementById('gallery-container');
+      const emptyMsg = container.querySelector('.empty-msg');
+      
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/list?type=upload&max_results=200`);
+      const data = await res.json();
 
-      try {
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/list?prefix=${folder}/&type=upload&max_results=100`, {
-          headers: { 'Authorization': 'Basic Mjc1MTUyMjYyODM4MzEyOFlYZVV1bHE0ekM3UzhjOXhhVjBFeTFPZWdCRQ==' }
+      if (data.resources && data.resources.length > 0) {
+        // Hide loading message
+        if (emptyMsg) emptyMsg.style.display = 'none';
+
+        // Build single gallery
+        const section = document.createElement('div');
+        section.className = 'gallery-section';
+        
+        const grid = document.createElement('div');
+        grid.className = 'gallery-grid';
+        grid.id = 'photo-grid';
+
+        data.resources.forEach(r => {
+          const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/c_fill,w_400,h_300,g_center,f_auto,q_auto/${r.public_id}`;
+          const full = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${r.public_id}`;
+          
+          const a = document.createElement('a');
+          a.href = full;
+          a.dataset.pswpWidth = r.width;
+          a.dataset.pswpHeight = r.height;
+          a.setAttribute('target', '_blank');
+
+          const img = document.createElement('img');
+          img.src = thumb;
+          img.alt = r.public_id.replace(/_/g, ' ');
+          img.loading = 'lazy';
+
+          a.appendChild(img);
+          grid.appendChild(a);
         });
-        const data = await res.json();
 
-        if (data.resources && data.resources.length > 0) {
-          data.resources.forEach(r => {
-            const thumbUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_thumb,w_400,f_auto,q_auto/${r.public_id}`;
-            const fullUrl = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${r.public_id}`;
+        section.appendChild(grid);
+        container.innerHTML = '';
+        container.appendChild(section);
 
-            const a = document.createElement('a');
-            a.href = fullUrl;
-            a.dataset.pswpWidth = r.width;
-            a.dataset.pswpHeight = r.height;
-            a.target = '_blank';
-            a.style.display = 'block';
+        // Init lightbox
+        const lightbox = new PhotoSwipeLightbox({
+          gallery: '#photo-grid',
+          children: 'a',
+          pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
+        });
+        lightbox.init();
 
-            const img = document.createElement('img');
-            img.src = thumbUrl;
-            img.alt = r.public_id.replace(/_/g, ' ');
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'cover';
-            img.style.borderRadius = 'var(--radius)';
-            img.style.boxShadow = 'var(--shadow-sm)';
-            img.loading = 'lazy';
-
-            a.appendChild(img);
-            container.appendChild(a);
-          });
-          container.style.display = 'grid';
-          if (emptyEl) emptyEl.style.display = 'none';
-        } else {
-          if (container) container.style.display = 'none';
-          if (emptyEl) emptyEl.style.display = 'block';
+      } else {
+        if (emptyMsg) {
+          emptyMsg.textContent = 'No photos yet. Photos will appear here as they are uploaded.';
+          emptyMsg.style.display = 'block';
         }
-      } catch (e) {
-        console.error(`Failed to load ${folder}:`, e);
-        if (container) container.style.display = 'none';
-        if (emptyEl) emptyEl.style.display = 'block';
       }
     }
 
-    // Load all sections
-    const galleryIds = [
-      { folder: 'General', containerId: 'gallery-general', emptyId: null },
-      { folder: 'Champions', containerId: 'gallery-champions', emptyId: 'empty-champions' },
-      { folder: 'Competitions', containerId: 'gallery-competitions', emptyId: 'empty-competitions' },
-      { folder: 'Alumni', containerId: 'gallery-alumni', emptyId: 'empty-alumni' },
-    ];
-
-    galleryIds.forEach(g => loadGallery(g.folder, g.containerId, g.emptyId));
-
-    // Init lightbox
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '.gallery-grid',
-      children: 'a',
-      pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
-    });
-    lightbox.init();
+    loadPhotos();
   </script>
 
   <script>
-    // Mobile nav
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
