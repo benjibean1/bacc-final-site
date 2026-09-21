@@ -18,13 +18,6 @@
     .gallery-section {
       margin-bottom: 4rem;
     }
-    .gallery-section .empty-msg {
-      text-align: center;
-      color: var(--text-muted);
-      font-style: italic;
-      padding: 2rem 0;
-      font-size: 1.1rem;
-    }
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -46,6 +39,13 @@
       height: 200px;
       object-fit: cover;
       display: block;
+    }
+    .no-gallery {
+      text-align: center;
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem 0;
+      font-size: 1.1rem;
     }
   </style>
 </head>
@@ -85,8 +85,11 @@
   <!-- Gallery Content -->
   <section class="section">
     <div class="container" style="max-width: 1100px;">
-      <div id="gallery-container">
-        <p class="empty-msg" style="font-size: 1.2rem;">Loading photos...</p>
+      <div class="gallery-section">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">General</h2>
+        <div class="gallery-grid" id="photo-grid">
+          <!-- Photos loaded from Cloudinary -->
+        </div>
       </div>
     </div>
   </section>
@@ -174,66 +177,50 @@
 
     const cloudName = 'dilrhyws';
 
-    // Fetch all photos from Cloudinary root
-    async function loadPhotos() {
-      const container = document.getElementById('gallery-container');
-      const emptyMsg = container.querySelector('.empty-msg');
-      
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/list?type=upload&max_results=200`);
-      const data = await res.json();
+    // Photo public_ids from Cloudinary account
+    const photos = [
+      'IMG_4335',
+      'IMG_4341',
+      '4440',
+      '4445',
+      'Hero',
+      'Wyatt_Lambert_USA_Nationals_2015',
+      'Wyatt_Nationals_2026_cropped',
+      '1783469315364blob-1'
+    ];
 
-      if (data.resources && data.resources.length > 0) {
-        // Hide loading message
-        if (emptyMsg) emptyMsg.style.display = 'none';
+    const grid = document.getElementById('photo-grid');
 
-        // Build single gallery
-        const section = document.createElement('div');
-        section.className = 'gallery-section';
-        
-        const grid = document.createElement('div');
-        grid.className = 'gallery-grid';
-        grid.id = 'photo-grid';
+    if (photos.length > 0) {
+      photos.forEach(name => {
+        const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/c_fill,w_400,h_300,g_center,f_auto,q_auto/${name}`;
+        const full = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${name}`;
 
-        data.resources.forEach(r => {
-          const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/c_fill,w_400,h_300,g_center,f_auto,q_auto/${r.public_id}`;
-          const full = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${r.public_id}`;
-          
-          const a = document.createElement('a');
-          a.href = full;
-          a.dataset.pswpWidth = r.width;
-          a.dataset.pswpHeight = r.height;
-          a.setAttribute('target', '_blank');
+        const a = document.createElement('a');
+        a.href = full;
+        a.dataset.pswpWidth = '1000';
+        a.dataset.pswpHeight = '750';
+        a.setAttribute('target', '_blank');
 
-          const img = document.createElement('img');
-          img.src = thumb;
-          img.alt = r.public_id.replace(/_/g, ' ');
-          img.loading = 'lazy';
+        const img = document.createElement('img');
+        img.src = thumb;
+        img.alt = name.replace(/_/g, ' ');
+        img.loading = 'lazy';
 
-          a.appendChild(img);
-          grid.appendChild(a);
-        });
-
-        section.appendChild(grid);
-        container.innerHTML = '';
-        container.appendChild(section);
-
-        // Init lightbox
-        const lightbox = new PhotoSwipeLightbox({
-          gallery: '#photo-grid',
-          children: 'a',
-          pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
-        });
-        lightbox.init();
-
-      } else {
-        if (emptyMsg) {
-          emptyMsg.textContent = 'No photos yet. Photos will appear here as they are uploaded.';
-          emptyMsg.style.display = 'block';
-        }
-      }
+        a.appendChild(img);
+        grid.appendChild(a);
+      });
+    } else {
+      grid.innerHTML = '<p class="no-gallery">No photos yet.</p>';
     }
 
-    loadPhotos();
+    // Init lightbox
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#photo-grid',
+      children: 'a',
+      pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
+    });
+    lightbox.init();
   </script>
 
   <script>
