@@ -85,12 +85,38 @@
   <!-- Gallery Content -->
   <section class="section">
     <div class="container" style="max-width: 1100px;">
+
+      <!-- General -->
       <div class="gallery-section">
         <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">General</h2>
-        <div class="gallery-grid" id="photo-grid">
-          <!-- Photos loaded from Cloudinary -->
+        <div class="gallery-grid" id="gallery-general">
         </div>
       </div>
+
+      <!-- Champions -->
+      <div class="gallery-section">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Champions</h2>
+        <div class="gallery-grid" id="gallery-champions">
+        </div>
+        <p class="no-gallery" id="empty-champions" style="display:none;">Photos coming soon...</p>
+      </div>
+
+      <!-- Competitions -->
+      <div class="gallery-section">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Competitions</h2>
+        <div class="gallery-grid" id="gallery-competitions">
+        </div>
+        <p class="no-gallery" id="empty-competitions" style="display:none;">Photos coming soon...</p>
+      </div>
+
+      <!-- Alumni -->
+      <div class="gallery-section">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Alumni</h2>
+        <div class="gallery-grid" id="gallery-alumni">
+        </div>
+        <p class="no-gallery" id="empty-alumni" style="display:none;">Photos coming soon...</p>
+      </div>
+
     </div>
   </section>
 
@@ -170,31 +196,39 @@
     </div>
   </div>
 
-  <!-- Load Photoswipe -->
   <script type="module">
     import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js';
     import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js';
 
     const cloudName = 'dilrhyws';
 
-    // Photo public_ids from Cloudinary account
-    const photos = [
-      'IMG_4335',
-      'IMG_4341',
-      '4440',
-      '4445',
-      'Hero',
-      'Wyatt_Lambert_USA_Nationals_2015',
-      'Wyatt_Nationals_2026_cropped',
-      '1783469315364blob-1'
+    // All photos with their Cloudinary folder path
+    // Format: { name, folder, publicId, alt }
+    const allPhotos = [
+      { name: 'IMG_4341', folder: 'General', publicId: 'General/IMG_4341', alt: 'IMG 4341' },
+      { name: 'IMG_4335', folder: 'General', publicId: 'General/IMG_4335', alt: 'IMG 4335' },
+      { name: '4440', folder: 'General', publicId: 'General/4440', alt: 'Photo 4440' },
+      { name: '4445', folder: 'General', publicId: 'General/4445', alt: 'Photo 4445' },
+      { name: 'Hero', folder: 'General', publicId: 'General/Hero', alt: 'Team Hero' },
+      { name: 'Wyatt_Lambert_USA_Nationals_2015', folder: 'General', publicId: 'General/Wyatt_Lambert_USA_Nationals_2015', alt: 'Wyatt Lambert USA Nationals 2015' },
+      { name: 'Wyatt_Nationals_2026_cropped', folder: 'General', publicId: 'General/Wyatt_Nationals_2026_cropped', alt: 'Wyatt Nationals 2026' },
+      { name: '1783469315364blob-1', folder: 'General', publicId: 'General/1783469315364blob-1', alt: 'Photo' },
     ];
 
-    const grid = document.getElementById('photo-grid');
+    function addToGallery(containerId, photos) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
 
-    if (photos.length > 0) {
-      photos.forEach(name => {
-        const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/c_fill,w_400,h_300,g_center,f_auto,q_auto/${name}`;
-        const full = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${name}`;
+      if (photos.length === 0) {
+        container.style.display = 'none';
+        const emptyEl = document.getElementById(containerId.replace('gallery', 'empty'));
+        if (emptyEl) emptyEl.style.display = 'block';
+        return;
+      }
+
+      photos.forEach(photo => {
+        const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/c_fill,w_400,h_300,g_center,f_auto,q_auto/${photo.publicId}`;
+        const full = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${photo.publicId}`;
 
         const a = document.createElement('a');
         a.href = full;
@@ -204,19 +238,31 @@
 
         const img = document.createElement('img');
         img.src = thumb;
-        img.alt = name.replace(/_/g, ' ');
+        img.alt = photo.alt;
         img.loading = 'lazy';
 
         a.appendChild(img);
-        grid.appendChild(a);
+        container.appendChild(a);
       });
-    } else {
-      grid.innerHTML = '<p class="no-gallery">No photos yet.</p>';
     }
+
+    // Organize photos into folders
+    const folders = ['General', 'Champions', 'Competitions', 'Alumni'];
+    const galleryIds = {
+      General: 'gallery-general',
+      Champions: 'gallery-champions',
+      Competitions: 'gallery-competitions',
+      Alumni: 'gallery-alumni'
+    };
+
+    folders.forEach(folder => {
+      const folderPhotos = allPhotos.filter(p => p.folder === folder);
+      addToGallery(galleryIds[folder], folderPhotos);
+    });
 
     // Init lightbox
     const lightbox = new PhotoSwipeLightbox({
-      gallery: '#photo-grid',
+      gallery: '.gallery-grid',
       children: 'a',
       pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js'),
     });
