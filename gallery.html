@@ -20,24 +20,27 @@
     }
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 1rem;
     }
     .gallery-grid a {
       display: block;
-      overflow: hidden;
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
       cursor: zoom-in;
       transition: transform 0.2s;
+      overflow: hidden;
+      background: var(--bg-light);
+      /* Uniform grid cells */
+      aspect-ratio: 1 / 1;
     }
     .gallery-grid a:hover {
       transform: scale(1.03);
     }
     .gallery-grid img {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      height: 100%;
+      object-fit: contain; /* Prevents cropping/squishing */
       display: block;
     }
     .no-gallery {
@@ -183,7 +186,7 @@
 
     const cloudName = 'dilrhyws';
 
-    // Direct Cloudinary CDN URLs - these are the working URLs
+    // Direct Cloudinary CDN URLs
     const photos = [
       { name: 'IMG_4335.jpg', alt: 'Team photo' },
       { name: 'IMG_4341.jpg', alt: 'Team photo' },
@@ -201,13 +204,14 @@
     if (photos.length > 0) {
       section.classList.add('visible');
       photos.forEach(photo => {
-        const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/c_fill,w_400,h_300,g_center,f_auto,q_auto/${photo.name}`;
+        // Thumbnail: Limit width to 400px, preserve aspect ratio (no crop)
+        const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/w_400,f_auto,q_auto/${photo.name}`;
+        // Full size: Original quality, preserved aspect ratio
         const full = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${photo.name}`;
 
         const a = document.createElement('a');
         a.href = full;
-        a.dataset.pswpWidth = '1000';
-        a.dataset.pswpHeight = '750';
+        // Remove hardcoded width/height so it uses actual image dimensions
         a.setAttribute('target', '_blank');
 
         const img = document.createElement('img');
