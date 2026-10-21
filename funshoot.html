@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blastin' at Ben Avery — Fun Shoot Registration — Ben Avery Clay Crushers</title>
+  <meta name="description" content="Register for the Ben Avery Clay Crushers Fun Shoot on Saturday, November 21, 2026. 50 targets of sporting clays at the Ben Avery Clay Target Center. $25 per shooter.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blastin' at Ben Avery — Fun Shoot — Ben Avery Clay Crushers">
+  <meta property="og:description" content="Fun Shoot Saturday, November 21, 2026. 50 targets. $25 per shooter. Register now.">
+  <meta property="og:image" content="https://benaveryclaycrushers.org/assets/Herobanner2.png">
+  <meta property="og:url" content="https://benaveryclaycrushers.org/funshoot.html">
+  <meta property="og:site_name" content="Ben Avery Clay Crushers">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://benaveryclaycrushers.org/funshoot.html">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">
+        <img src="assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="funshoot.html" class="active">Fun Shoot</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="index.html" class="navbar-cta">Join the Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section style="background: var(--primary-blue); color: var(--white); padding: 4rem 0 3rem; text-align: center;">
+    <div class="container">
+      <h1 style="font-size: 2.75rem;">Blastin' at Ben Avery!</h1>
+      <p style="font-size: 1.35rem; opacity: 0.95; max-width: 700px; margin: 0.75rem auto 0;">BACC Fun Shoot &mdash; Saturday, November 21, 2026</p>
+      <p style="font-size: 1.05rem; opacity: 0.85; max-width: 700px; margin: 0.5rem auto 0;">Sporting Clays Fun Shoot at the Ben Avery Clay Target Center, Phoenix, AZ</p>
+    </div>
+  </section>
+
+  <!-- Event Details -->
+  <section>
+    <div class="container" style="max-width: 860px; padding: 2.5rem 1.5rem 0.5rem;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; text-align: center;">
+        <div style="background: var(--card-bg, #fff); border: 1px solid #e6e6e6; border-radius: var(--radius); padding: 1.5rem 1rem; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 2rem;">&#127919;</div>
+          <h3 style="color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 0.35rem;">50 Targets</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">per shooter</p>
+        </div>
+        <div style="background: var(--card-bg, #fff); border: 1px solid #e6e6e6; border-radius: var(--radius); padding: 1.5rem 1rem; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 2rem;">&#9200;</div>
+          <h3 style="color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 0.35rem;">8:30 AM Brief</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Safety brief &amp; National Anthem<br>First flight: 9:00 AM</p>
+        </div>
+        <div style="background: var(--card-bg, #fff); border: 1px solid #e6e6e6; border-radius: var(--radius); padding: 1.5rem 1rem; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 2rem;">&#128181;</div>
+          <h3 style="color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 0.35rem;">$25.00</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">per shooter<br>Ammo: 2 boxes $15.00</p>
+        </div>
+      </div>
+      <div style="background: #fff4eb; border: 2px solid var(--accent-orange); border-radius: var(--radius); padding: 1.5rem 2rem; margin-top: 1.5rem; text-align: center;">
+        <h3 style="color: var(--primary-blue); margin-bottom: 0.5rem;">What to Bring</h3>
+        <p style="color: var(--text-dark); line-height: 1.8; font-size: 1rem;">
+          Food and water (a food truck may be available) &bull; Eye and ear protection &bull; Brimmed hat &bull;
+          Closed-toed shoes and appropriate attire &bull; A good attitude!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration Form -->
+  <section>
+    <div class="registration-container">
+      <div class="registration-header">
+        <h2 style="font-size: 1.75rem; color: var(--primary-blue);">Fun Shoot Registration</h2>
+        <p>Saturday, November 21, 2026 &bull; Registration closes November 3, 2026.</p>
+      </div>
+
+      <div id="form-message" class="form-message"></div>
+
+      <form id="funshoot-form">
+
+        <div class="form-section">
+          <h3>Shooter Information</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>First Name <span class="required">*</span></label>
+              <input type="text" name="first_name" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="required">*</span></label>
+              <input type="text" name="last_name" required>
+            </div>
+            <div class="form-group">
+              <label>Email <span class="required">*</span></label>
+              <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" name="phone" placeholder="(555) 555-5555">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Ammunition</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Ammo Purchase &mdash; 2 Boxes ($15.00) <span class="required">*</span></label>
+              <select name="ammo_purchase" id="ammo-purchase" required>
+                <option value="">Select...</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="form-group" id="gauge-group" style="display: none;">
+              <label>Ammo Gauge <span class="required">*</span></label>
+              <select name="ammo_gauge" id="ammo-gauge">
+                <option value="">Select...</option>
+                <option value="12">12 Gauge</option>
+                <option value="20">20 Gauge</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Payment</h3>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label>Payment Method <span class="required">*</span></label>
+              <select name="payment_method" required>
+                <option value="">Select...</option>
+                <option value="paypal">PayPal (you will receive a secure payment link)</option>
+                <option value="cash">Cash (bring to the event)</option>
+                <option value="check">Check (bring to the event)</option>
+              </select>
+              <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+                Event fee: $25.00 per shooter. Add $15.00 if purchasing 2 boxes of ammo.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+          <button type="submit" id="submit-btn" class="btn-primary" style="font-size: 1.15rem; padding: 0.9rem 3rem;">Submit Registration</button>
+        </div>
+
+      </form>
+
+      <!-- Success view (hidden until submit) -->
+      <div id="success-view" style="display: none;">
+        <div style="background: #eef7ee; border: 2px solid #2e7d32; border-radius: var(--radius); padding: 2.5rem 2rem; text-align: center;">
+          <div style="font-size: 3rem;">&#10003;</div>
+          <h2 style="color: #2e7d32; margin: 0.75rem 0;">Registration Received!</h2>
+          <p id="success-summary" style="font-size: 1.05rem; color: var(--text-dark); line-height: 1.7;"></p>
+          <div id="pay-link-box" style="display: none; background: #fff; border: 1px solid #ddd; border-radius: var(--radius); padding: 1.25rem; margin: 1.5rem auto; max-width: 560px;">
+            <p style="font-weight: 700; color: var(--primary-blue); margin-bottom: 0.5rem;">Your Permanent Payment Link (never expires &mdash; save it)</p>
+            <p id="pay-link-text" style="word-break: break-all; font-family: monospace; font-size: 0.95rem; background: #f4f4f4; padding: 0.6rem; border-radius: 6px;"></p>
+          </div>
+          <p style="color: var(--text-muted); margin-top: 1rem;">A confirmation email has been sent to the address you provided.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Clay Crushers Logo">
+          <p>Developing young shooters with a commitment to safety, sportsmanship, and excellence at the Ben Avery Clay Target Center in Phoenix, AZ.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="registration.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></li>
+            <li>Ben Avery Clay Target Center</li>
+            <li>5060 W Skeet St, Phoenix, AZ 85086</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> Ben Avery Clay Crushers. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_URL = 'https://api.benaveryclaycrushers.org';
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Ammo gauge only visible when ammo purchase = Yes
+    document.getElementById('ammo-purchase').addEventListener('change', function() {
+      const gaugeGroup = document.getElementById('gauge-group');
+      const gauge = document.getElementById('ammo-gauge');
+      if (this.value === 'yes') {
+        gaugeGroup.style.display = '';
+        gauge.required = true;
+      } else {
+        gaugeGroup.style.display = 'none';
+        gauge.required = false;
+        gauge.value = '';
+      }
+    });
+
+    const form = document.getElementById('funshoot-form');
+    const formMessage = document.getElementById('form-message');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function showFormMessage(msg, type) {
+      formMessage.textContent = msg;
+      formMessage.className = 'form-message ' + type;
+      formMessage.style.display = 'block';
+    }
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      let hasEmpty = false;
+      form.querySelectorAll('[required]').forEach(field => {
+        if (!field.value.trim()) { field.style.borderColor = 'var(--accent-orange)'; hasEmpty = true; }
+        else { field.style.borderColor = ''; }
+      });
+      if (hasEmpty) {
+        showFormMessage('Please fill in all required fields marked with an asterisk.', 'error');
+        return;
+      }
+
+      const data = {};
+      new FormData(form).forEach((value, key) => { if (value.trim()) data[key] = value.trim(); });
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const res = await fetch(API_URL + '/api/funshoot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+
+        if (!res.ok || result.error) {
+          showFormMessage(result.error || 'Something went wrong. Please try again or email info@benaveryclaycrushers.org.', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Registration';
+          return;
+        }
+
+        const reg = result.registration;
+        document.getElementById('success-summary').innerHTML =
+          'Thank you, <strong>' + reg.first_name + ' ' + reg.last_name + '</strong>!<br>' +
+          'Total due: <strong>$' + reg.total_fee.toFixed(2) + '</strong>' +
+          (reg.payment_method === 'paypal'
+            ? ' &mdash; pay online any time using your permanent payment link below (also sent by email).'
+            : ' &mdash; please bring ' + (reg.payment_method === 'check' ? 'your check' : 'cash') + ' with you on event day.');
+
+        if (reg.payment_method === 'paypal' && reg.payment_url) {
+          document.getElementById('pay-link-box').style.display = 'block';
+          document.getElementById('pay-link-text').textContent = reg.payment_url;
+        }
+
+        form.style.display = 'none';
+        document.getElementById('success-view').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        showFormMessage('Unable to reach the registration server. Please try again in a moment.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Registration';
+      }
+    });
+  </script>
+
+</body>
+</html>

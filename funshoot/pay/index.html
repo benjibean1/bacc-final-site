@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Shoot Payment — Ben Avery Clay Crushers</title>
+    <link rel="icon" type="image/png" href="../../assets/logo.png">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .pay-container {
+            max-width: 600px;
+            margin: 2rem auto 3rem;
+            padding: 0 1.5rem;
+            flex: 1;
+        }
+        .pay-logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .pay-logo img {
+            height: 80px;
+            width: auto;
+        }
+        .pay-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-md);
+            border-top: 4px solid var(--accent-orange);
+        }
+        .pay-title {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+        .pay-subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        .pay-info {
+            margin-bottom: 1.25rem;
+        }
+        .pay-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.2rem;
+        }
+        .pay-value {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        .pay-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .pay-paid-box {
+            background: #e8f5e9;
+            border: 2px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .pay-paid-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .pay-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-orange);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+        }
+        .pay-btn:hover {
+            background: var(--accent-orange-hover);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .pay-loading {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+        }
+        .pay-error {
+            color: #c62828;
+            background: #ffebee;
+            padding: 1rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        .pay-permanent {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-left: 4px solid #1976d2;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+        .pay-permanent strong {
+            color: #1976d2;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .pay-permanent small {
+            color: #64b5f6;
+            font-size: 0.8rem;
+        }
+        .pay-footer-text {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../index.html" class="navbar-logo">
+                <img src="../../assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="navbar-links" id="navLinks">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../about.html">About</a></li>
+                <li><a href="../../schedule.html">Schedule</a></li>
+                <li><a href="../../registration.html">Register</a></li>
+                <li><a href="../../contact.html">Contact</a></li>
+                <li><a href="../../registration.html" class="navbar-cta">Join the Team</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="pay-container">
+        <!-- Logo Header -->
+        <div class="pay-logo">
+            <img src="../../assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+        </div>
+
+        <div class="pay-card" id="app">
+            <div class="pay-loading">Loading your registration details...</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="../../assets/logo.png" alt="Ben Avery Clay Crushers Logo">
+                    <p>Ben Avery Clay Crushers<br>Developing Champions in the Shotgun Shooting Sports</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../../about.html">About</a></li>
+                        <li><a href="../../schedule.html">Schedule</a></li>
+                        <li><a href="../../registration.html">Register</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="../../contact.html">Contact Us</a></li>
+                        <li><a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Ben Avery Clay Crushers. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function getQueryParam(name) {
+            var params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        var token = getQueryParam('token');
+        if (!token) {
+            var pathParts = window.location.pathname.split('/');
+            var pathToken = pathParts[pathParts.length - 1];
+            if (pathToken && pathToken !== 'index.html') {
+                token = pathToken;
+            }
+        }
+
+        var API_BASE = 'https://api.benaveryclaycrushers.org';
+
+        function showError(msg) {
+            document.getElementById('app').innerHTML =
+                '<div class="pay-error">' +
+                    '<h2 style="color: #c62828; margin-bottom: 0.5rem;">Payment Link Not Found</h2>' +
+                    '<p style="margin-bottom: 1rem;">' + msg + '</p>' +
+                    '<p>If you believe this is an error, please contact us at <a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></p>' +
+                '</div>';
+        }
+
+        if (!token) {
+            document.getElementById('app').innerHTML =
+                '<div class="pay-error">' +
+                    '<h2 style="color: #c62828; margin-bottom: 0.5rem;">Invalid Payment Link</h2>' +
+                    '<p>This payment link is not valid. Please check your email for the correct link.</p>' +
+                    '<p style="margin-top: 1rem;">Or contact us at <a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></p>' +
+                '</div>';
+        } else {
+            fetch(API_BASE + '/api/funshoot/pay/' + token)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    var app = document.getElementById('app');
+
+                    if (data.error) {
+                        showError(data.error);
+                        return;
+                    }
+
+                    if (data.paid) {
+                        var reg = data.registration;
+                        app.innerHTML =
+                            '<div class="pay-paid-box">' +
+                                '<div class="pay-paid-icon">&#10003;</div>' +
+                                '<h2 class="pay-title">Fun Shoot Payment Received</h2>' +
+                                '<p class="pay-subtitle">Blastin\' at Ben Avery — Nov 21, 2026. Thank you!</p>' +
+                                '<div class="pay-info">' +
+                                    '<div class="pay-label">Shooter</div>' +
+                                    '<div class="pay-value">' + reg.first_name + ' ' + reg.last_name + '</div>' +
+                                '</div>' +
+                                '<div class="pay-info">' +
+                                    '<div class="pay-label">Amount Paid</div>' +
+                                    '<div class="pay-amount">$' + (reg.total_fee || 0).toFixed(2) + '</div>' +
+                                '</div>' +
+                                '<p class="pay-footer-text">Questions? Contact us at <a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></p>' +
+                            '</div>';
+                        return;
+                    }
+
+                    var reg = data.registration;
+                    var price = (reg.total_fee || 0).toFixed(2);
+                    var paymentUrl = data.payment_url || '#';
+                    var ammoNote = reg.ammo_purchase === 'yes'
+                        ? ('2 boxes of ' + (reg.ammo_gauge || '?') + ' gauge ammo')
+                        : 'No ammo purchase';
+
+                    if (data.method && data.method !== 'paypal') {
+                        // Cash or check: nothing to pay online
+                        app.innerHTML =
+                            '<h1 class="pay-title">Fun Shoot Registration</h1>' +
+                            '<p class="pay-subtitle">Blastin\' at Ben Avery — Saturday, Nov 21, 2026</p>' +
+                            '<div class="pay-info">' +
+                                '<div class="pay-label">Shooter</div>' +
+                                '<div class="pay-value">' + reg.first_name + ' ' + reg.last_name + '</div>' +
+                            '</div>' +
+                            '<div class="pay-info">' +
+                                '<div class="pay-label">Ammunition</div>' +
+                                '<div class="pay-value">' + ammoNote + '</div>' +
+                            '</div>' +
+                            '<div class="pay-info">' +
+                                '<div class="pay-label">Amount Due</div>' +
+                                '<div class="pay-amount">$' + price + '</div>' +
+                            '</div>' +
+                            '<p style="text-align: center; margin: 1rem 0; color: #555;">' +
+                                'You chose to pay by <strong>' + data.method + '</strong> — please bring ' +
+                                (data.method === 'check' ? 'your check' : 'cash') +
+                                ' with you on event day. No online payment needed.' +
+                            '</p>' +
+                            '<p class="pay-footer-text">Questions? Contact us at <a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></p>';
+                        return;
+                    }
+
+                    app.innerHTML =
+                        '<h1 class="pay-title">Blastin\' at Ben Avery</h1>' +
+                        '<p class="pay-subtitle">Fun Shoot Payment — Saturday, Nov 21, 2026</p>' +
+                        
+                        '<div class="pay-permanent">' +
+                            '<strong>Your Permanent Payment Link</strong>' +
+                            'Save this — you can use it anytime. It will not expire.' +
+                            '<small>https://benaveryclaycrushers.org' + window.location.pathname + (window.location.search || '') + '</small>' +
+                        '</div>' +
+                        
+                        '<div class="pay-info">' +
+                            '<div class="pay-label">Shooter</div>' +
+                            '<div class="pay-value">' + reg.first_name + ' ' + reg.last_name + '</div>' +
+                        '</div>' +
+                        '<div class="pay-info">' +
+                            '<div class="pay-label">Ammunition</div>' +
+                            '<div class="pay-value">' + ammoNote + '</div>' +
+                        '</div>' +
+                        
+                        '<div class="pay-amount">$' + price + '</div>' +
+                        
+                        '<p style="text-align: center; margin-bottom: 1rem; color: #555;">' +
+                            'By clicking "Pay Now" you will be taken to PayPal to complete your payment securely. ' +
+                            'This link never expires — you can pay at any time.' +
+                        '</p>' +
+                        
+                        '<a href="' + paymentUrl + '" class="pay-btn" id="pay-btn" ' +
+                           'style="' + (paymentUrl === '#' ? 'opacity: 0.5; pointer-events: none;' : '') + '">' +
+                            'Pay Now via PayPal' +
+                        '</a>' +
+                        
+                        '<p class="pay-footer-text">Questions? Contact us at <a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a></p>';
+
+                    document.getElementById('pay-btn').addEventListener('click', function() {
+                        fetch(API_BASE + '/api/funshoot/pay/' + token + '/notify', { method: 'POST' });
+                    });
+                })
+                .catch(function(err) {
+                    console.error('Error:', err);
+                    showError('Unable to load your registration. Please try again or contact us at <a href="mailto:info@benaveryclaycrushers.org">info@benaveryclaycrushers.org</a>.');
+                });
+        }
+    </script>
+</body>
+</html>

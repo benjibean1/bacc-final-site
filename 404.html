@@ -10,7 +10,15 @@
     // This 404.html acts as a redirect handler for /pay/<token> URLs.
     // GitHub Pages serves 404.html for any unmatched path.
     var path = window.location.pathname;
-    if (path.indexOf('/pay/') === 0 && path !== '/pay/index.html') {
+    if (path.indexOf('/funshoot/pay/') === 0) {
+        var fsParts = path.split('/');
+        var fsToken = fsParts[3];
+        if (fsToken && fsToken !== '' && fsToken !== 'index.html') {
+            window.location.href = '/funshoot/pay/index.html?token=' + fsToken;
+        } else {
+            window.location.href = '/funshoot/pay/index.html';
+        }
+    } else if (path.indexOf('/pay/') === 0 && path !== '/pay/index.html') {
         var parts = path.split('/');
         var token = parts[2];
         if (token && token !== '' && token !== 'index.html') {
