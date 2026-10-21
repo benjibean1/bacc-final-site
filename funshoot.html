@@ -170,7 +170,8 @@
           <p id="success-summary" style="font-size: 1.05rem; color: var(--text-dark); line-height: 1.7;"></p>
           <div id="pay-link-box" style="display: none; background: #fff; border: 1px solid #ddd; border-radius: var(--radius); padding: 1.25rem; margin: 1.5rem auto; max-width: 560px;">
             <p style="font-weight: 700; color: var(--primary-blue); margin-bottom: 0.5rem;">Your Permanent Payment Link (never expires &mdash; save it)</p>
-            <p id="pay-link-text" style="word-break: break-all; font-family: monospace; font-size: 0.95rem; background: #f4f4f4; padding: 0.6rem; border-radius: 6px;"></p>
+            <p style="margin-bottom: 0.6rem;"><a id="pay-link" href="#" style="color: var(--accent-orange); font-weight: 600; font-size: 1.05rem; word-break: break-all;">Pay now &mdash; click here</a></p>
+            <p id="pay-link-text" style="word-break: break-all; font-family: monospace; font-size: 0.85rem; color: var(--text-muted); background: #f4f4f4; padding: 0.6rem; border-radius: 6px;"></p>
           </div>
           <p style="color: var(--text-muted); margin-top: 1rem;">A confirmation email has been sent to the address you provided.</p>
         </div>
@@ -289,6 +290,7 @@
 
         if (reg.payment_method === 'paypal' && reg.payment_url) {
           document.getElementById('pay-link-box').style.display = 'block';
+          document.getElementById('pay-link').href = reg.payment_url;
           document.getElementById('pay-link-text').textContent = reg.payment_url;
         }
 

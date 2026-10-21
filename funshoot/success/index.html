@@ -22,5 +22,24 @@
     </p>
     <p style="margin-top: 2rem;"><a href="../../funshoot.html" style="color: var(--accent-orange); font-weight: 600;">Back to the Fun Shoot page</a></p>
   </div>
+  <script>
+    // If PayPal returned us here for a specific registration, record the payment immediately.
+    (function () {
+      var t = new URLSearchParams(window.location.search).get('t');
+      if (!t) return;
+      var API = 'https://api.benaveryclaycrushers.org';
+      var tries = 0;
+      function notify() {
+        fetch(API + '/api/funshoot/pay/' + t + '/notify', { method: 'POST' })
+          .then(function (r) { return r.json(); })
+          .then(function (d) {
+            if (d.status === 'paid' || ++tries >= 4) return;
+            setTimeout(notify, 3000);
+          })
+          .catch(function () { if (tries++ < 4) setTimeout(notify, 3000); });
+      }
+      notify();
+    })();
+  </script>
 </body>
 </html>
