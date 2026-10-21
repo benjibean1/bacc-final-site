@@ -56,7 +56,7 @@
         <div style="background: var(--card-bg, #fff); border: 1px solid #e6e6e6; border-radius: var(--radius); padding: 1.5rem 1rem; box-shadow: var(--shadow-sm);">
           <div style="font-size: 2rem;">&#127919;</div>
           <h3 style="color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 0.35rem;">50 Targets</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem;">per shooter</p>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Sporting Clays<br>per shooter</p>
         </div>
         <div style="background: var(--card-bg, #fff); border: 1px solid #e6e6e6; border-radius: var(--radius); padding: 1.5rem 1rem; box-shadow: var(--shadow-sm);">
           <div style="font-size: 2rem;">&#9200;</div>
@@ -117,7 +117,7 @@
           <h3>Ammunition</h3>
           <div class="form-grid">
             <div class="form-group">
-              <label>Ammo Purchase &mdash; 2 Boxes ($15.00) <span class="required">*</span></label>
+              <label>Optional Ammo Purchase &mdash; 2 Boxes ($15.00) <span class="required">*</span></label>
               <select name="ammo_purchase" id="ammo-purchase" required>
                 <option value="">Select...</option>
                 <option value="yes">Yes</option>
@@ -143,11 +143,14 @@
               <select name="payment_method" required>
                 <option value="">Select...</option>
                 <option value="paypal">PayPal (you will receive a secure payment link)</option>
-                <option value="cash">Cash (bring to the event)</option>
-                <option value="check">Check (bring to the event)</option>
+                <option value="cash">Cash (bring to next practice)</option>
+                <option value="check">Check (bring to next practice)</option>
               </select>
               <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
                 Event fee: $25.00 per shooter. Add $15.00 if purchasing 2 boxes of ammo.
+              </p>
+              <p style="color: #c62828; font-weight: 600; font-size: 0.95rem; margin-top: 0.5rem;">
+                Payment is required to shoot in the event. Registration is not confirmed until payment is received &mdash; no exceptions.
               </p>
             </div>
           </div>
@@ -282,7 +285,7 @@
           'Total due: <strong>$' + reg.total_fee.toFixed(2) + '</strong>' +
           (reg.payment_method === 'paypal'
             ? ' &mdash; pay online any time using your permanent payment link below (also sent by email).'
-            : ' &mdash; please bring ' + (reg.payment_method === 'check' ? 'your check' : 'cash') + ' with you on event day.');
+            : ' &mdash; please bring ' + (reg.payment_method === 'check' ? 'your check' : 'cash') + ' to your next practice. Payment is required to shoot in the event.');
 
         if (reg.payment_method === 'paypal' && reg.payment_url) {
           document.getElementById('pay-link-box').style.display = 'block';
